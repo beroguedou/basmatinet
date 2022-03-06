@@ -1,0 +1,4 @@
+**/logs
+**/*.pth
+**/*.ipynb
+**/__pycache__
