@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import torch
 
@@ -25,7 +26,7 @@ def one_epoch_training(dataloader, model, criterion, optimizer, device):
         optimizer.step()
         # Statistics
         train_loss += loss.item()
-    return train_loss
+    return train_loss / len(dataloader)
 
 
 def one_epoch_validation(dataloader, model, criterion, device):
@@ -47,7 +48,7 @@ def one_epoch_validation(dataloader, model, criterion, device):
             loss = criterion(outputs, labels)
             # Statistics
             val_loss += loss.item()
-    return val_loss
+    return val_loss / len(dataloader)
         
 
 
@@ -61,16 +62,18 @@ def all_epochs_training_and_validation(train_dataloader, val_dataloader,
     best_val_loss = np.inf
     for epoch in range(nb_epochs):
         train_loss = one_epoch_training(train_dataloader, model, criterion, optimizer, device)
-        val_loss = one_epoch_training(val_dataloader, model, criterion, device)
+        val_loss = one_epoch_validation(val_dataloader, model, criterion, device)
+        # Print metrics
+        print("Epoch:{}, Train Loss: {}  Val Loss: {} ".format(epoch + 1, round(train_loss, 8) , round(val_loss, 8)))
         # Early stopping 
         if val_loss < best_val_loss:
-            print("Epoch {} Loss decreased from {}  to ---->  {} \t Saving the model".format(epoch + 1, train_loss, val_loss))
             best_val_loss = val_loss
+            counter = 0
             # Save the model
-            torch.save(model.state_dict(), model_name)
+            save_path = os.path.join("app", model_name)
+            torch.save(model.state_dict(), save_path)
         else:
             counter += 1
-            if counter == early_stopping:
-                print("===="*3, " EARLY STOPPING ", "===="*3)
-        # Print metrics
-        print("Epoch, Train Loss {}  Val Loss {} ".format(epoch + 1, round(train_loss, 5) , round(val_loss)))
+        if counter == early_stopping:
+            print("===="*3, " EARLY STOPPING ", "===="*3)
+            break

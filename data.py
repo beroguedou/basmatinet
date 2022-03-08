@@ -54,5 +54,6 @@ class RiceDataset(torch.utils.data.Dataset):
         X = X.float()
         y = os.listdir(self.base_path).index(label)
         y = F.one_hot(torch.tensor(y), num_classes=self.num_classes)
+        y = y.float()
         
         return X, y
