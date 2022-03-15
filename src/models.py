@@ -1,7 +1,6 @@
 import timm
 import torch.nn as nn
 
-# Model
 
 class RiceNet(nn.Module):
     def __init__(self, num_classes=5):

@@ -29,11 +29,19 @@ class RiceDataset(torch.utils.data.Dataset):
         self.list_labels = functools.reduce(lambda x, y: x+y, list_labels)
 
         # Augmentations
-        self.transforms = A.Compose([
-            A.RandomCrop(width=224, height=224),
-            A.HorizontalFlip(p=0.5),
-            A.RandomBrightnessContrast(p=0.2)
-        ])
+        if self.train == True:
+            self.transforms = A.Compose([
+                A.RandomCrop(width=224, height=224),
+                A.HorizontalFlip(p=0.5),
+                A.RandomBrightnessContrast(p=0.2)
+            ])
+        else:
+            self.transforms = A.Compose([
+                A.Resize(width=224, height=224) # Achanger plus tard
+                ])
+            
+        self.labels_dict = dict(zip(os.listdir(self.base_path), range(self.num_classes)))
+        self.labels_dict_reverse = dict(zip(range(self.num_classes), os.listdir(self.base_path)))
     
     def __len__(self):
         return len(self.list_IDs)
@@ -47,12 +55,12 @@ class RiceDataset(torch.utils.data.Dataset):
         X = Image.open(image_path)
         X = np.asarray(X)
         # Augmentations while training
-        if self.train == True:
-            X = self.transforms(image=X)["image"]
+        X = self.transforms(image=X)["image"]
            
         X = torch.from_numpy(X).permute(2, 0, 1)
         X = X.float()
-        y = os.listdir(self.base_path).index(label)
+        #y = os.listdir(self.base_path).index(label)
+        y = self.labels_dict[label]
         y = F.one_hot(torch.tensor(y), num_classes=self.num_classes)
         y = y.float()
         
