@@ -1,0 +1,5 @@
+Pillow
+flask 
+albumentations
+numpy
+timm
