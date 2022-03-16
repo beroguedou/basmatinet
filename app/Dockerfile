@@ -1,6 +1,8 @@
 FROM python:3.6-slim
 WORKDIR /usr/src/app
-COPY . .
+COPY ./requirements.txt .
+COPY ./models.py .
+COPY ./api.py .
 RUN python3 -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip3 install --no-cache-dir torch==1.9.0+cpu \

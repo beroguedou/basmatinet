@@ -1,12 +1,3 @@
-#import sys
-import os
-
-#import pathlib
-
-#parent = pathlib.Path(__file__).resolve().parent.parent
-#parent = os.path.join(parent, "src")
-#sys.path.append(parent)
-
 import base64
 import io
 from PIL import Image
@@ -16,14 +7,14 @@ import albumentations as A
 import numpy as np
 import torch
 
-#MODEL_PATH = "/home/beranger/basmatinet/app/basmatinet.pth"
-MODEL_PATH = "basmatinet.pth"
-ARCH_PATH = "models.py"
-#print("FI WÈ MI DÉ: -------> ", os.listdir())
+MODEL_PATH = "/data/basmatinet.pth"
 
-#exec(ARCH_PATH)
 # Map labels and categories
-labels_dict_reverse = {0: 'Arborio', 1: 'Karacadag', 2: 'Basmati', 3: 'Jasmine', 4: 'Ipsala'}
+labels_dict_reverse = {0: 'Arborio',
+                       1: 'Karacadag', 
+                       2: 'Basmati', 
+                       3: 'Jasmine',
+                       4: 'Ipsala'}
 # Load the model
 model = RiceNet()
 model.load_state_dict(torch.load(MODEL_PATH))
