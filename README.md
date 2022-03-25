@@ -15,7 +15,6 @@ Ce projet traite:
 - [x] Encryptage des données par un client et décryptage dans le serveur pour assurer la confidentialité.
 - [x] Conteneurisation de l'application Flask en microservices Docker.
 - [ ] Orchestration du service de prédiction avec Kubernetes (k8S) sur Google Cloud.
-docker build -t ml-k8s .
 - [ ] Sauvegarder des images et de leur prédictions dans une base de données PostgreSQL.
 - [ ] Tests Unitaires avec Pytest (Fixtures et Mocks y sont utilisés).
 - [ ] Logging pendant l'entraînement et les prédictions
