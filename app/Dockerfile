@@ -1,11 +1,9 @@
-FROM python:3.6-slim
+FROM python:3.7-slim
 WORKDIR /usr/src/app
-COPY ./requirements.txt .
-COPY ./models.py .
-COPY ./api.py .
-RUN python3 -m pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip3 install --no-cache-dir torch==1.9.0+cpu \
+COPY requirements.txt api_utils.py models.py api.py ./
+RUN python -m pip install --upgrade pip && \ 
+    pip install --no-cache-dir -r requirements.txt &&\
+    pip3 install --no-cache-dir torch==1.9.0+cpu \
     torchvision==0.10.0+cpu \
     torchaudio==0.9.0 -f \
     https://download.pytorch.org/whl/torch_stable.html
