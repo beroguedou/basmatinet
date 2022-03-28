@@ -1,43 +1,66 @@
 import base64
 import io
 from PIL import Image
-from flask import request
 import albumentations as A
 import numpy as np
 import torch
+from models import RiceNet
 
+MODEL_PATH = "/data/basmatinet.pth"
 
-transforms = A.Compose([
-                A.Resize(width=224, height=224) # Achanger plus tard
-                ])
+class BasmatinetPrediction():
+    
+    def __init__(self):
+        # Map labels and categories
+        self.labels_dict_reverse = {0: 'Arborio',
+                       1: 'Karacadag', 
+                       2: 'Basmati', 
+                       3: 'Jasmine',
+                       4: 'Ipsala'}
+        # Load the model
+        self.model = RiceNet()
+        self.model.load_state_dict(torch.load(MODEL_PATH))
+        # Inference image transformations
+        self.transforms = A.Compose([
+                                A.Resize(width=224, height=224) 
+                                ])
 
-def load_image():
-    # Get the image in base 64 and decode it
-    payload = request.form.to_dict(flat=False)
-    image_b64 = payload["image"][0]
-    image_binary = base64.b64decode(image_b64)
-    # Convert the base64 image to PIL Image object
-    image_buf = io.BytesIO(image_binary)
-    image = Image.open(image_buf)
-    return image
+    def _load_image(self, image_b64):
+        image_binary = base64.b64decode(image_b64)
+        # Convert the base64 image to PIL Image object
+        image_buf = io.BytesIO(image_binary)
+        image = Image.open(image_buf)
+        return image
 
-def preprocess(image):
-    X = np.asarray(image)
-    X = transforms(image=X)["image"]
-    X = torch.from_numpy(X).permute(2, 0, 1).unsqueeze(0)
-    X = X.float()
-    return X
+    def _preprocess(self, image):
+        X = np.asarray(image)
+        X = self.transforms(image=X)["image"]
+        X = torch.from_numpy(X).permute(2, 0, 1).unsqueeze(0)
+        X = X.float()
+        return X
 
-def predict(X, model):
-    out = model(X).squeeze(0)
-    proba, index = torch.topk(out, 1)  
-    index = index.item()
-    proba = round(proba.item(), 4)
-    return proba, index  
+    def _predict(self, X):
+        out = self.model(X).squeeze(0)
+        proba, index = torch.topk(out, 1)  
+        index = index.item()
+        proba = round(proba.item(), 4)
+        return proba, index  
     
 
-def post_process(proba, index, labels_dict_reverse):
-    response = {"category": labels_dict_reverse[index], 
-                "probability": proba}
-    return response
-
+    def _post_process(self, proba, index):
+        response = {"category": self.labels_dict_reverse[index], 
+                    "probability": proba}
+        return response
+    
+    def inference_pipeline(self, image_b64):
+        # Load the image
+        image = self._load_image(image_b64)
+        # Preprocess it
+        X = self._preprocess(image)
+        # Go through the model and get a prediction
+        proba, index = self._predict(X)
+        # Post process the prediction and build a response
+        response = self._post_process(proba, index)   
+        return response
+    
+    
