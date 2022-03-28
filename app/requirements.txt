@@ -3,3 +3,4 @@ flask
 albumentations
 numpy
 timm
+psycopg2-binary

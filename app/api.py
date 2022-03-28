@@ -21,15 +21,21 @@ model.load_state_dict(torch.load(MODEL_PATH))
 app = Flask(__name__)
 
 
-@app.route('/image/predict/', methods=['POST'])
+@app.route('/serving/predict', methods=['POST'])
 def prediction_pipeline():
+    # Load the image
     image = load_image()
+    # Preprocess it
     X = preprocess(image)
+    # Go through the model and get a prediction
     proba, index = predict(X, model)
-    response = post_process(proba, index, labels_dict_reverse)
-    
+    # Post process the prediction and build a response
+    response = post_process(proba, index, labels_dict_reverse)    
     return make_response(jsonify(response))
 
+@app.route('/serving/healthcheck', methods=['GET'])
+def healthcheck():
+    return make_response(jsonify({"status": "ok"}))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
