@@ -1,5 +1,6 @@
 import base64
 import io
+import yaml
 from PIL import Image
 import albumentations as A
 import numpy as np
@@ -7,16 +8,11 @@ import torch
 from models import RiceNet
 
 MODEL_PATH = "/data/basmatinet.pth"
+CONFIG_PATH = "./app_config.yaml"
 
 class BasmatinetPrediction():
     
     def __init__(self):
-        # Map labels and categories
-        self.labels_dict_reverse = {0: 'Arborio',
-                       1: 'Karacadag', 
-                       2: 'Basmati', 
-                       3: 'Jasmine',
-                       4: 'Ipsala'}
         # Load the model
         self.model = RiceNet()
         self.model.load_state_dict(torch.load(MODEL_PATH))
@@ -24,6 +20,12 @@ class BasmatinetPrediction():
         self.transforms = A.Compose([
                                 A.Resize(width=224, height=224) 
                                 ])
+        
+    @property
+    def labels_map_reverse(self):
+        with open(CONFIG_PATH, "r") as file:
+            content = yaml.safe_load(file)
+        return content["labels_map_reverse"]        
 
     def _load_image(self, image_b64):
         image_binary = base64.b64decode(image_b64)
@@ -48,7 +50,7 @@ class BasmatinetPrediction():
     
 
     def _post_process(self, proba, index):
-        response = {"category": self.labels_dict_reverse[index], 
+        response = {"category": self.labels_map_reverse[index], 
                     "probability": proba}
         return response
     

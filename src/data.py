@@ -59,7 +59,6 @@ class RiceDataset(torch.utils.data.Dataset):
            
         X = torch.from_numpy(X).permute(2, 0, 1)
         X = X.float()
-        #y = os.listdir(self.base_path).index(label)
         y = self.labels_dict[label]
         y = F.one_hot(torch.tensor(y), num_classes=self.num_classes)
         y = y.float()
