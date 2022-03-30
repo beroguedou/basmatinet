@@ -14,10 +14,11 @@ Ce projet traite:
 - [x] Rest Api avec Flask pour servir le modèle entraîné.
 - [x] Encryptage des données par un client et décryptage dans le serveur pour assurer la confidentialité.
 - [x] Conteneurisation de l'application Flask en microservices Docker.
+- [ ] Yaml for config file.
+- [ ] Logging pendant l'entraînement et les prédictions.
 - [ ] Orchestration du service de prédiction avec Kubernetes (k8S) sur Google Cloud.
 - [ ] Sauvegarder des images et de leur prédictions dans une base de données PostgreSQL.
 - [ ] Tests Unitaires avec Pytest (Fixtures et Mocks y sont utilisés).
-- [ ] Logging pendant l'entraînement et les prédictions
 - [ ] Détection de Drift sur les images en entrées et sur les prédictions en sortie du système. 
 - [ ] Monitoring avec Grafana.
 
