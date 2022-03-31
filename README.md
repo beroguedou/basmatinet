@@ -6,6 +6,15 @@ Ce projet est un projet pédagogique pour aider toute personne désireuse à app
   <img src="./app/arborio.jpg" height="25%" width="50%">
 </p>
 
+## Architecture du modèle dockérisé
+
+<p align="center">
+  <img src="./app/architecture_dockerize.jpeg" height="25%" width="50%">
+</p>
+
+
+
+
 Ce projet traite:
 
 - [x] L'entrainement d'un modèle de Deep Learning avec Pytorch.
