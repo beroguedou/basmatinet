@@ -8,14 +8,7 @@ Ce projet est un projet pédagogique pour aider toute personne désireuse à app
 
 
 
-## 1- Architecture du modèle dockérisé
-
-<p align="center">
-  <img src="./app/architecture_dockerize.jpeg" height="50%" width="75%">
-</p>
-
-
-## 2- Roadmap du projet
+## 1- Roadmap du projet
 
 Ce projet traite:
 
