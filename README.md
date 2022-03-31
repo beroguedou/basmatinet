@@ -6,14 +6,16 @@ Ce projet est un projet pédagogique pour aider toute personne désireuse à app
   <img src="./app/arborio.jpg" height="25%" width="50%">
 </p>
 
-## Architecture du modèle dockérisé
+
+
+## 1- Architecture du modèle dockérisé
 
 <p align="center">
   <img src="./app/architecture_dockerize.jpeg" height="50%" width="75%">
 </p>
 
 
-
+## 2- Roadmap du projet
 
 Ce projet traite:
 
