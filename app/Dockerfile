@@ -8,4 +8,8 @@ RUN python -m pip install --upgrade pip && \
     torchaudio==0.9.0 -f \
     https://download.pytorch.org/whl/torch_stable.html
 
+VOLUME /data
+
+EXPOSE 5000
+
 CMD ["python", "api.py"]
