@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: basmatinet-app
+  labels:
+    app: basmatinet-app
+  namespace: mlops-qa
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: basmatinet-app

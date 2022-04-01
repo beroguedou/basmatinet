@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: basmatinet-app
+  name: basmatinet-app
+  namespace: mlops-qa
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: basmatinet-app
+  template:
+    metadata:
+      labels:
+        app: basmatinet-app
+    spec:
+      containers:
+      - image: <DOCKER_IMAGE_NAME> # Docker image name, that we pushed to GCR
+        name: basmatinet    
+        ports:
+        - containerPort: 5000
+          protocol: TCP

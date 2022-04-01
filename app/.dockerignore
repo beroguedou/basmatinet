@@ -1,0 +1,5 @@
+**/Dockerfile
+**/*ipynb*
+**/frontend.py
+**/*ignore
+**/k8s

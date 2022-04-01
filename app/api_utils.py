@@ -7,7 +7,7 @@ import numpy as np
 import torch
 from models import RiceNet
 
-MODEL_PATH = "/data/basmatinet.pth"
+MODEL_PATH = "./basmatinet.pth"
 CONFIG_PATH = "./app_config.yaml"
 
 class BasmatinetPrediction():
