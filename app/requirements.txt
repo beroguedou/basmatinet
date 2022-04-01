@@ -1,5 +1,5 @@
-Pillow
-flask 
-albumentations
-numpy
-timm
+albumentations==1.1.0
+Flask==2.0.3
+numpy==1.21.2
+Pillow==9.0.1
+timm==0.5.4

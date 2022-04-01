@@ -34,11 +34,43 @@ This project will consist to:
 - [ ] Monitoring avec Grafana.
 
 ## 1- Install project's dependencies and packages
+This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
+```bash
+# Move into the project root
+cd basmatinet
+# 1st alternative: using pip
+pip install -r requirements.txt
+# 2nd alternative
+conda install --file requirements.txt
+```
 
 ## 2- Train a basmatinet model
+```bash
 
+```
 ## 3- Dockerize the model and push the Docker Image to Google Container Registry
 
-## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
+1st step: Let's build a docker images
+```bash
+# Move into the app directory
+cd basmatinet/app
+# Build the machine learning serving app image
+docker build -t basmatinet .
+# Run a model serving app container outside of kubernetes (optionnal) 
+docker run -d -p 5000:5000 basmatinet
+# Try an inference to test the endpoint
+python frontend.py
+```
 
+2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io"
+
+```bash
+# Re-tag the image and include the container in the image tag
+docker tag basmatinet [HOSTNAME]/[PROJECT-ID]/basmatinet
+# Push to container registry
+docker push [HOSTNAME]/[PROJECT-ID]/basmatinet
+```
+## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
+```bash
+```
 
