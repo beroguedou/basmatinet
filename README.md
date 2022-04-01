@@ -35,13 +35,15 @@ This project will consist to:
 
 ## 1- Install project's dependencies and packages
 This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
+
 ```bash
 # Move into the project root
-cd basmatinet
+$ cd basmatinet
+
 # 1st alternative: using pip
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 # 2nd alternative
-conda install --file requirements.txt
+$ conda install --file requirements.txt
 ```
 
 ## 2- Train a basmatinet model
@@ -53,22 +55,26 @@ conda install --file requirements.txt
 1st step: Let's build a docker images
 ```bash
 # Move into the app directory
-cd basmatinet/app
+$ cd basmatinet/app
+
 # Build the machine learning serving app image
-docker build -t basmatinet .
+$ docker build -t basmatinet .
+
 # Run a model serving app container outside of kubernetes (optionnal) 
-docker run -d -p 5000:5000 basmatinet
+$ docker run -d -p 5000:5000 basmatinet
+
 # Try an inference to test the endpoint
-python frontend.py
+$ python frontend.py
 ```
 
 2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io" and you should enable GCR Api on google cloud platform.
 
 ```bash
 # Re-tag the image and include the container in the image tag
-docker tag basmatinet [HOSTNAME]/[PROJECT-ID]/basmatinet
+$ docker tag basmatinet [HOSTNAME]/[PROJECT-ID]/basmatinet
+
 # Push to container registry
-docker push [HOSTNAME]/[PROJECT-ID]/basmatinet
+$ docker push [HOSTNAME]/[PROJECT-ID]/basmatinet
 ```
 
 ## 4- Create a kubernetes cluster
@@ -77,6 +83,7 @@ First of all you should enable GKE Api on google cloud platform. And go to the c
 ```bash
 # Start a cluster
 $ gcloud container clusters create k8s-gke-cluster --num-nodes 3 --machine-type g1-small --zone us-west1-b
+
 # Connect to the cluster
 $ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --project [PROJECT_ID]
 
@@ -86,10 +93,11 @@ $ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --
 Create the deployement and the service on a kubernetes cluster.
 ```bash
 # In the app directory 
-kubectl apply -f k8s
+$ kubectl apply -f k8s
 
 # Check that everything is alright with the following command and look for basmatinet-app in the output
-kubectl get services
+$ kubectl get services
+
 # The output should look like
 NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
 basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
