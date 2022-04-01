@@ -3,7 +3,7 @@
 Ce projet est un projet pédagogique pour aider toute personne désireuse à apprendre les principaux composants pour entraîner un système de Deep Learning destiné à aller en production se basant sur un jeu de données de détection de différentes variétés de Riz. Alors vous êtes plutôt "Nigerian Jollof Or Senegalese Jollof ?? ". 
 
 <p align="center">
-  <img src="../images/arborio.jpg" height="25%" width="50%">
+  <img src="./images/arborio.jpg" height="25%" width="50%">
 </p>
 
 
