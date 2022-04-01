@@ -24,7 +24,7 @@ This project will consist to:
 - [x] Package the application in microservice's fashion with Docker.
 - [x] Yaml for configurations file.
 - [x] Passing arguments anywhere it is possible.
-- [x] Orchestration the prediction service with Kubernetes (k8S) on Google Cloud Platform.
+- [x] Orchestration the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [ ] Logging during training.
 - [ ] CI/CD.
 - [ ] Save images and predictions in InfluxDB database.
@@ -62,7 +62,7 @@ docker run -d -p 5000:5000 basmatinet
 python frontend.py
 ```
 
-2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io"
+2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io" and you should enable GCR Api on google cloud platform.
 
 ```bash
 # Re-tag the image and include the container in the image tag
@@ -70,7 +70,28 @@ docker tag basmatinet [HOSTNAME]/[PROJECT-ID]/basmatinet
 # Push to container registry
 docker push [HOSTNAME]/[PROJECT-ID]/basmatinet
 ```
-## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
+
+## 4- Create a kubernetes cluster
+First of all you should enable GKE Api on google cloud platform. And go to the cloud shell or stay on your host if you have gcloud binary already installed.
+
 ```bash
+# Start a cluster
+$ gcloud container clusters create k8s-gke-cluster --num-nodes 3 --machine-type g1-small --zone us-west1-b
+# Connect to the cluster
+$ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --project [PROJECT_ID]
+
 ```
 
+## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
+Create the deployement and the service on a kubernetes cluster.
+```bash
+# In the app directory 
+kubectl apply -f k8s
+
+# Check that everything is alright with the following command and look for basmatinet-app in the output
+kubectl get services
+# The output should look like
+NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
+basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
+```
+Take the EXTERNAL-IP and test your service. Then you can cook your jollof with some basmatinet!!! 
