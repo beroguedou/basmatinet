@@ -8,9 +8,9 @@ Ce projet est un projet pédagogique pour aider toute personne désireuse à app
 
 
 
-## 0- Roadmap du projet
+## 0- Project's Roadmap
 
-Ce projet traite:
+This project will consist to:
 
 - [x] Train a Deep Learning model with Pytorch.
 - [x] Transfert learning from Efficient Net.
