@@ -64,7 +64,7 @@ $ docker build -t basmatinet .
 $ docker run -d -p 5000:5000 basmatinet
 
 # Try an inference to test the endpoint
-$ python frontend.py
+$ python frontend.py --filename "../images/arborio.jpg" --host-ip "0.0.0.0"
 ```
 
 2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io" and you should enable GCR Api on google cloud platform.
@@ -102,4 +102,4 @@ $ kubectl get services
 NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
 basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
 ```
-Take the EXTERNAL-IP and test your service. Then you can cook your jollof with some basmatinet!!! 
+Take the EXTERNAL-IP and test your service with the file basmatinet/app/frontend.py . Then you can cook your jollof with some basmatinet!!! 
