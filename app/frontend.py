@@ -1,7 +1,7 @@
 import base64
 import requests
 
-filename = "../arborio.jpg"
+filename = "../images/arborio.jpg"
 api_url = "http://192.168.0.23:5000/serving/predict"
 with open(filename, "rb") as img:
     img_b64 = base64.b64encode(img.read())
