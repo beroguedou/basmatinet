@@ -1,9 +1,11 @@
 # Basmatinet
 
-Ce projet est un projet pédagogique pour aider toute personne désireuse à apprendre les principaux composants pour entraîner un système de Deep Learning destiné à aller en production se basant sur un jeu de données de détection de différentes variétés de Riz. Alors vous êtes plutôt "Nigerian Jollof Or Senegalese Jollof ?? ". 
+Welcome to this project folks !
+
+Whether you like it or not this project is all about riiiiice or riz in french. It is also about Deep Learning and MLOPS. So if you want to learn to train and deploy a simple model to recognize rice type basing on a photo, then you are at the right place. 
 
 <p align="center">
-  <img src="./images/logo.jpg" height="25%" width="50%">
+  <img src="./images/logo.jpg" height="50%" width="75%">
 </p>
 
 
@@ -14,12 +16,14 @@ This project will consist to:
 
 - [x] Train a Deep Learning model with Pytorch.
 - [x] Transfert learning from Efficient Net.
+- [x] Data augmentation with Albumentation.
 - [x] Save trained model with early stopping.
 - [x] Track the training with MLFLOW.
 - [x] Serve the model with a Rest Api built with Flask.
 - [x] Encrypt data client side before sending to the api server to allow confidentiality.
 - [x] Package the application in microservice's fashion with Docker.
 - [x] Yaml for configurations file.
+- [x] Passing arguments anywhere it is possible.
 - [x] Orchestration the prediction service with Kubernetes (k8S) on Google Cloud Platform.
 - [ ] Logging during training.
 - [ ] CI/CD.
@@ -29,8 +33,12 @@ This project will consist to:
 - [ ] Concept Drift monitoring. 
 - [ ] Monitoring avec Grafana.
 
-## 1- Dockerize the application and Push to Google Container Registry
+## 1- Install project's dependencies and packages
 
-## 2- Deploy the application on Kubernetes (Google Kubernetes Engine)
+## 2- Train a basmatinet model
+
+## 3- Dockerize the model and push the Docker Image to Google Container Registry
+
+## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
 
 
