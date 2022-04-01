@@ -8,22 +8,29 @@ Ce projet est un projet pédagogique pour aider toute personne désireuse à app
 
 
 
-## 1- Roadmap du projet
+## 0- Roadmap du projet
 
 Ce projet traite:
 
-- [x] L'entrainement d'un modèle de Deep Learning avec Pytorch.
-- [x] Transfert learning à partir d'Efficient Net.
-- [x] Sauvegarde du modèle entraîné.
-- [x] Rest Api avec Flask pour servir le modèle entraîné.
-- [x] Encryptage des données par un client et décryptage dans le serveur pour assurer la confidentialité.
-- [x] Conteneurisation de l'application Flask en microservices Docker.
-- [ ] Yaml for config file.
-- [ ] Logging pendant l'entraînement et les prédictions.
-- [ ] Orchestration du service de prédiction avec Kubernetes (k8S) sur Google Cloud.
-- [ ] Sauvegarder des images et de leur prédictions dans une base de données PostgreSQL.
-- [ ] Tests Unitaires avec Pytest (Fixtures et Mocks y sont utilisés).
-- [ ] Détection de Drift sur les images en entrées et sur les prédictions en sortie du système. 
+- [x] Train a Deep Learning model with Pytorch.
+- [x] Transfert learning from Efficient Net.
+- [x] Save trained model with early stopping.
+- [x] Track the training with MLFLOW.
+- [x] Serve the model with a Rest Api built with Flask.
+- [x] Encrypt data client side before sending to the api server to allow confidentiality.
+- [x] Package the application in microservice's fashion with Docker.
+- [x] Yaml for configurations file.
+- [x] Orchestration the prediction service with Kubernetes (k8S) on Google Cloud Platform.
+- [ ] Logging during training.
+- [ ] CI/CD.
+- [ ] Save images and predictions in InfluxDB database.
+- [ ] Unitary tests with Pytest (Fixtures and Mocks).
+- [ ] Data Drift monitoring. 
+- [ ] Concept Drift monitoring. 
 - [ ] Monitoring avec Grafana.
+
+## 1- Dockerize the application and Push to Google Container Registry
+
+## 2- Deploy the application on Kubernetes (Google Kubernetes Engine)
 
 
