@@ -88,7 +88,7 @@ First of all you should enable GKE Api on google cloud platform. And go to the c
 
 ```bash
 # Start a cluster
-$ gcloud container clusters create k8s-gke-cluster --num-nodes 3 --machine-type g1-small --zone us-west1-b
+$ gcloud container clusters create k8s-gke-cluster --num-nodes 3 --machine-type g1-small --zone europe-west1-b
 
 # Connect to the cluster
 $ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --project [PROJECT_ID]

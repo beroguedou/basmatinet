@@ -2,4 +2,5 @@
 **/*.ipynb*
 **/__pycache__
 **/*cache*
+**/*ignore
 **/cheatsheet.txt
