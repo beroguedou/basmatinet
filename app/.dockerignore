@@ -1,6 +1,6 @@
 **/Dockerfile
 **/*ipynb*
 **/frontend.py
-**/*ignore
+**/.dockerignore
 **/k8s
 **/*.pth
