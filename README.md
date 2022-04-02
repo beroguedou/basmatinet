@@ -48,7 +48,7 @@ $ conda install --file requirements.txt
 
 ## 2- Train a basmatinet model
 ```bash
-
+$ python src/train.py "/path/to/rice_image_dataset/" --batch-size 16  --nb-epochs 200 --workers 8 --early-stopping 5  --percentage 0.1 --cuda
 ```
 ## 3- Dockerize the model and push the Docker Image to Google Container Registry
 

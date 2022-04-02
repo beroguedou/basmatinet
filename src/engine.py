@@ -9,8 +9,8 @@ def one_epoch_training(dataloader, model, criterion, optimizer, device):
     model.train()
     train_loss = 0.0
     for i, data in enumerate(dataloader):
-        if i == 2:
-            break
+        #if i == 2:
+        #    break
         # Get the inputs data and move to device
         images, labels = data
         images, labels = images.to(device), labels.to(device)
@@ -37,8 +37,8 @@ def one_epoch_validation(dataloader, model, criterion, device):
     val_loss = 0.0
     with torch.no_grad():
         for i, data in enumerate(dataloader):
-            if i == 2:
-                break
+            #if i == 2:
+            #    break
             # Get the inputs data and move to device
             images, labels = data
             images, labels = images.to(device), labels.to(device)
@@ -70,7 +70,7 @@ def all_epochs_training_and_validation(train_dataloader, val_dataloader,
             best_val_loss = val_loss
             counter = 0
             # Save the model
-            save_path = os.path.join("app/saved", model_name)
+            save_path = os.path.join("app", model_name)
             torch.save(model.state_dict(), save_path)
         else:
             counter += 1
