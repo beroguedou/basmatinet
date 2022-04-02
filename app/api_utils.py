@@ -6,8 +6,9 @@ import albumentations as A
 import numpy as np
 import torch
 from models import RiceNet
+import torch.nn.functional as F
 
-MODEL_PATH = "./basmatinet.pth"
+MODEL_PATH = "/data/basmatinet.pth"
 CONFIG_PATH = "./app_config.yaml"
 
 class BasmatinetPrediction():
@@ -15,7 +16,7 @@ class BasmatinetPrediction():
     def __init__(self):
         # Load the model
         self.model = RiceNet()
-        self.model.load_state_dict(torch.load(MODEL_PATH))
+        self.model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
         # Inference image transformations
         self.transforms = A.Compose([
                                 A.Resize(width=224, height=224) 
@@ -43,6 +44,7 @@ class BasmatinetPrediction():
 
     def _predict(self, X):
         out = self.model(X).squeeze(0)
+        out = F.softmax(out, dim=-1)
         proba, index = torch.topk(out, 1)  
         index = index.item()
         proba = round(proba.item(), 4)
