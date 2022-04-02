@@ -18,7 +18,6 @@ def prediction_pipeline():
 
 @app.route('/serving/healthcheck', methods=['GET'])
 def healthcheck():
-    #return make_response(jsonify({"status": "ok"}))
     return 200
 
 if __name__ == "__main__":
