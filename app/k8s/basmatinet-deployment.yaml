@@ -4,7 +4,6 @@ metadata:
   labels:
     app: basmatinet-app
   name: basmatinet-app
-  namespace: mlops-qa
 spec:
   replicas: 5
   selector:
@@ -17,15 +16,7 @@ spec:
     spec:
       containers:
         - image: <DOCKER_IMAGE_NAME> # Docker image name, that we pushed to GCR
-          name: basmatinet    
+          name: basmatinet 
           ports:
             - containerPort: 5000
               protocol: TCP
-          volumeMounts:
-          - name: basmatinet-volume
-            mountPath: /data
-      volumes:
-        - name: basmatinet-volume
-          persistentVolumeClaim:
-            claimName: basmatinet-dynamic-volume
-            readOnly: true

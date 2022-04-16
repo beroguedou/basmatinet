@@ -26,12 +26,10 @@ This project will consist to:
 - [x] Passing arguments anywhere it is possible.
 - [x] Orchestration the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [ ] Logging during training.
-- [ ] CI/CD.
+- [ ] CI with github actions.
+- [ ] CD with terraform to build environment on Google Cloud Platform 
 - [ ] Save images and predictions in InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
-- [ ] Data Drift monitoring. 
-- [ ] Concept Drift monitoring. 
-- [ ] Monitoring avec Grafana.
 
 ## 1- Install project's dependencies and packages
 This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
@@ -99,7 +97,13 @@ $ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --
 Create the deployement and the service on a kubernetes cluster.
 ```bash
 # In the app directory 
-$ kubectl apply -f k8s
+$ cd basmatinet/app
+# Create the namespace
+$ kubectl apply -f k8s/namespace.yaml
+# Create the deployment
+$ kubectl apply -f k8s/basmatinet-deployment.yaml --namespace=mlops-qa
+# Create the service
+$ kubectl apply -f k8s/basmatinet-service.yaml --namespace=mlops-qa
 
 # Check that everything is alright with the following command and look for basmatinet-app in the output
 $ kubectl get services

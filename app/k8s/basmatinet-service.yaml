@@ -4,7 +4,6 @@ metadata:
   name: basmatinet-app
   labels:
     app: basmatinet-app
-  namespace: mlops-qa
 spec:
   type: LoadBalancer
   ports:
