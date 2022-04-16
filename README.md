@@ -101,9 +101,9 @@ $ cd basmatinet/app
 # Create the namespace
 $ kubectl apply -f k8s/namespace.yaml
 # Create the deployment
-$ kubectl apply -f k8s/basmatinet-deployment.yaml --namespace=mlops-qa
+$ kubectl apply -f k8s/basmatinet-deployment.yaml --namespace=mlops-test
 # Create the service
-$ kubectl apply -f k8s/basmatinet-service.yaml --namespace=mlops-qa
+$ kubectl apply -f k8s/basmatinet-service.yaml --namespace=mlops-test
 
 # Check that everything is alright with the following command and look for basmatinet-app in the output
 $ kubectl get services
