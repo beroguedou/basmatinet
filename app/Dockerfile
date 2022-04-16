@@ -1,13 +1,14 @@
-FROM 
+FROM --platform=linux/amd64 python:3.6-slim
+COPY requirements.txt /tmp
+RUN python -m pip install --upgrade pip && \ 
+    pip install --no-cache-dir -r /tmp/requirements.txt
 
-WORKDIR 
+RUN groupadd -g 1000 mlgroup && useradd -u 1000 -g mlgroup mluser
+RUN mkdir -p /usr/src/app && chown mluser:mlgroup /usr/src/app
+USER mluser:mlgroup
+WORKDIR /usr/src/app
+COPY --chown=mluser:mlgroup api_utils.py api.py models.py basmatinet.pth app_config.yaml ./
 
-COPY 
+EXPOSE 5000
 
-RUN 
-
-VOLUME 
-
-EXPOSE 
-
-CMD 
+CMD ["gunicorn", "--bind", ":5000", "api:app"]

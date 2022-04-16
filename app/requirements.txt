@@ -3,3 +3,4 @@ Flask
 Pillow
 timm
 numpy
+gunicorn~=20.1.0

@@ -3,4 +3,4 @@
 **/frontend.py
 **/.dockerignore
 **/k8s
-**/*.pth
+
