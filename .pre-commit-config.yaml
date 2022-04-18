@@ -1,0 +1,31 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-docstring-first
+    -   id: requirements-txt-fixer
+    -   id: check-merge-conflict
+    -   id: no-commit-to-branch
+        args:
+          - "-b main"
+          - "-b master"
+          - "-b production"
+          - "-b prod"
+    -   id: name-tests-test
+        args:
+          - "--django"
+    -   id: double-quote-string-fixer
+    -   id: check-yaml
+        args:
+          - "--allow-multiple-documents"
+    -   id: check-added-large-files
+        args:
+          - "--maxkb=1000"
+-   repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: 'v1.6.0'
+    hooks:
+      - id: autopep8

@@ -25,7 +25,7 @@ This project will consist to:
 - [x] Yaml for configurations file.
 - [x] Passing arguments anywhere it is possible.
 - [x] Orchestration the prediction service with Kubernetes (k8s) on Google Cloud Platform.
-- [ ] Pre-commit git hook.
+- [x] Pre-commit git hook.
 - [ ] Logging during training.
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
