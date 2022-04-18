@@ -1,6 +1,6 @@
 FROM --platform=linux/amd64 python:3.6-slim
 COPY requirements.txt /tmp
-RUN python -m pip install --upgrade pip && \ 
+RUN python -m pip install --upgrade pip && \
     pip install --no-cache-dir -r /tmp/requirements.txt
 
 RUN groupadd -g 1000 mlgroup && useradd -u 1000 -g mlgroup mluser

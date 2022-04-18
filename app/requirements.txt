@@ -1,6 +1,6 @@
 albumentations
 Flask
+gunicorn~=20.1.0
+numpy
 Pillow
 timm
-numpy
-gunicorn~=20.1.0

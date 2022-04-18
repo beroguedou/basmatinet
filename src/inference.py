@@ -9,18 +9,18 @@ def artefacts_loader(model_path, labels_json_path):
     model = torch.load(model_path)
     model.eval()
     # Load the labels
-    labels = 1 # just a placeholder
+    labels = 1  # just a placeholder
     return model, labels
 
 
 def preprocess(image_path):
-    image = 1 # just a placeholder
+    image = 1  # just a placeholder
     return image
 
 
 def predict(image, model):
-    """ 
-    """    
+    """
+    """
     with torch.no_grad():
         output = model(image)
     return output
@@ -32,5 +32,3 @@ def postprocess():
 
 def inference():
     pass
-        
-

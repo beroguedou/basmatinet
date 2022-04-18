@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: <DOCKER_IMAGE_NAME> # Docker image name, that we pushed to GCR
-          name: basmatinet 
+          name: basmatinet
           ports:
             - containerPort: 5000
               protocol: TCP
