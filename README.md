@@ -26,7 +26,6 @@ This project will consist to:
 - [x] Passing arguments anywhere it is possible.
 - [x] Orchestration the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [x] Pre-commit git hook.
-- [x] Styling with flake8, isort and mypy.
 - [ ] Logging during training.
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
