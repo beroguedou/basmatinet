@@ -2,7 +2,7 @@
 
 Welcome to this project folks !
 
-Whether you like it or not this project is all about riiiiice or riz in french. It is also about Deep Learning and MLOPS. So if you want to learn to train and deploy a simple model to recognize rice type basing on a photo, then you are at the right place. 
+Whether you like it or not this project is all about riiiiice or riz in french. It is also about Deep Learning and MLOPS. So if you want to learn to train and deploy a simple model to recognize rice type basing on a photo, then you are at the right place.
 
 <p align="center">
   <img src="./images/logo.jpg" height="50%" width="75%">
@@ -18,17 +18,20 @@ This project will consist to:
 - [x] Transfert learning from Efficient Net.
 - [x] Data augmentation with Albumentation.
 - [x] Save trained model with early stopping.
-- [ ] Track the training with MLFLOW.
+- [x] Track the training with MLFLOW.
 - [x] Serve the model with a Rest Api built with Flask.
-- [x] Encrypt data client side before sending to the api server to allow confidentiality.
+- [x] Encode data in base64 client side before sending to the api server.
 - [x] Package the application in microservice's fashion with Docker.
 - [x] Yaml for configurations file.
 - [x] Passing arguments anywhere it is possible.
-- [x] Orchestration the prediction service with Kubernetes (k8s) on Google Cloud Platform.
+- [x] Orchestrate the prediction service with Kubernetes (k8s) on Google Cloud Platform.
+- [x] Pre-commit git hook.
 - [ ] Logging during training.
 - [ ] CI with github actions.
-- [ ] CD with terraform to build environment on Google Cloud Platform 
+- [ ] CD with terraform to build environment on Google Cloud Platform.
 - [ ] Save images and predictions in InfluxDB database.
+- [ ] Create K8s service endpoint for external InfluxDB database.
+- [ ] Create K8s secret for external InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
 
 ## 1- Install project's dependencies and packages
@@ -64,7 +67,7 @@ $ cd basmatinet/app
 # Build the machine learning serving app image
 $ docker build -t basmatinet .
 
-# Run a model serving app container outside of kubernetes (optionnal) 
+# Run a model serving app container outside of kubernetes (optionnal)
 $ docker run -d -p 5000:5000 basmatinet
 
 # Try an inference to test the endpoint
@@ -96,7 +99,7 @@ $ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --
 ## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
 Create the deployement and the service on a kubernetes cluster.
 ```bash
-# In the app directory 
+# In the app directory
 $ cd basmatinet/app
 # Create the namespace
 $ kubectl apply -f k8s/namespace.yaml
@@ -112,4 +115,4 @@ $ kubectl get services
 NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
 basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
 ```
-Take the EXTERNAL-IP and test your service with the file basmatinet/app/frontend.py . Then you can cook your jollof with some basmatinet!!! 
+Take the EXTERNAL-IP and test your service with the file basmatinet/app/frontend.py . Then you can cook your jollof with some basmatinet!!!
