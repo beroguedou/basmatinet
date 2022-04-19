@@ -61,19 +61,19 @@ def all_epochs_training_and_validation(train_dataloader, val_dataloader,
     with mlflow.start_run():
         counter = 0
         best_val_loss = np.inf
-        # Tracking all parameters in mlflow 
-        mlflow.log_param("nb_epochs", nb_epochs)
-        mlflow.log_param("batch_size", train_dataloader.batch_size)
-        mlflow.log_param("early_stopping", early_stopping)
-        
+        # Tracking all parameters in mlflow
+        mlflow.log_param('nb_epochs', nb_epochs)
+        mlflow.log_param('batch_size', train_dataloader.batch_size)
+        mlflow.log_param('early_stopping', early_stopping)
+
         for epoch in range(nb_epochs):
             train_loss = one_epoch_training(
                 train_dataloader, model, criterion, optimizer, device)
             val_loss = one_epoch_validation(
                 val_dataloader, model, criterion, device)
             # Tracking in mlflow
-            mlflow.log_metric("train_loss", train_loss, epoch+1)
-            mlflow.log_metric("val_loss", val_loss, epoch+1)
+            mlflow.log_metric('train_loss', train_loss, epoch+1)
+            mlflow.log_metric('val_loss', val_loss, epoch+1)
             # Print metrics
             print('Epoch:{}, Train Loss: {}  Val Loss: {} '.format(
                 epoch + 1, round(train_loss, 8), round(val_loss, 8)))

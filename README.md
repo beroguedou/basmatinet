@@ -18,7 +18,7 @@ This project will consist to:
 - [x] Transfert learning from Efficient Net.
 - [x] Data augmentation with Albumentation.
 - [x] Save trained model with early stopping.
-- [ ] Track the training with MLFLOW.
+- [x] Track the training with MLFLOW.
 - [x] Serve the model with a Rest Api built with Flask.
 - [x] Encrypt data client side before sending to the api server to allow confidentiality.
 - [x] Package the application in microservice's fashion with Docker.
