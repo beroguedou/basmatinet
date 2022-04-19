@@ -20,16 +20,18 @@ This project will consist to:
 - [x] Save trained model with early stopping.
 - [x] Track the training with MLFLOW.
 - [x] Serve the model with a Rest Api built with Flask.
-- [x] Encrypt data client side before sending to the api server to allow confidentiality.
+- [x] Encode data in base64 client side before sending to the api server.
 - [x] Package the application in microservice's fashion with Docker.
 - [x] Yaml for configurations file.
 - [x] Passing arguments anywhere it is possible.
-- [x] Orchestration the prediction service with Kubernetes (k8s) on Google Cloud Platform.
+- [x] Orchestrate the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [x] Pre-commit git hook.
 - [ ] Logging during training.
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
 - [ ] Save images and predictions in InfluxDB database.
+- [ ] Create K8s service endpoint for external InfluxDB database.
+- [ ] Create K8s secret for external InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
 
 ## 1- Install project's dependencies and packages
