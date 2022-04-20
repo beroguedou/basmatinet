@@ -52,7 +52,7 @@ def one_epoch_validation(dataloader, model, criterion, device):
     return val_loss / len(dataloader)
 
 
-def all_epochs_training_and_validation(train_dataloader, val_dataloader,
+def all_epochs_training_and_validation(logger, train_dataloader, val_dataloader,
                                        model, criterion, optimizer, device,
                                        nb_epochs=20, early_stopping=5,
                                        model_name='basmatinet.pth'):
@@ -66,6 +66,9 @@ def all_epochs_training_and_validation(train_dataloader, val_dataloader,
         mlflow.log_param('batch_size', train_dataloader.batch_size)
         mlflow.log_param('early_stopping', early_stopping)
 
+        logger.info('Starting a training for {} epochs, with batch size {} and early stopping programmed after {} '.format(
+            nb_epochs, train_dataloader.batch_size, early_stopping))
+
         for epoch in range(nb_epochs):
             train_loss = one_epoch_training(
                 train_dataloader, model, criterion, optimizer, device)
@@ -75,7 +78,7 @@ def all_epochs_training_and_validation(train_dataloader, val_dataloader,
             mlflow.log_metric('train_loss', train_loss, epoch+1)
             mlflow.log_metric('val_loss', val_loss, epoch+1)
             # Print metrics
-            print('Epoch:{}, Train Loss: {}  Val Loss: {} '.format(
+            logger.debug('Epoch:{}, Train Loss: {}  Val Loss: {} '.format(
                 epoch + 1, round(train_loss, 8), round(val_loss, 8)))
             # Early stopping
             if val_loss < best_val_loss:
@@ -87,5 +90,5 @@ def all_epochs_training_and_validation(train_dataloader, val_dataloader,
             else:
                 counter += 1
             if counter == early_stopping:
-                print('===='*3, ' EARLY STOPPING ', '===='*3)
+                logger.debug('======== EARLY STOPPING ========')
                 break

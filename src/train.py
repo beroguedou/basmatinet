@@ -3,6 +3,14 @@ import data
 import models
 import engine
 import torch
+import logging
+from rich.logging import RichHandler
+from config import logging_config
+
+
+logging.config.dictConfig(logging_config)
+logger = logging.getLogger('root')
+logger.handlers[0] = RichHandler(markup=True)
 
 
 training_parser = argparse.ArgumentParser(
@@ -67,7 +75,8 @@ optimizer = torch.optim.SGD(net.parameters(), lr=0.01)
 net.to(device)
 
 # Training
-engine.all_epochs_training_and_validation(train_dataloader,
+engine.all_epochs_training_and_validation(logger,
+                                          train_dataloader,
                                           val_dataloader,
                                           net,
                                           criterion,
