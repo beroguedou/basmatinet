@@ -6,6 +6,8 @@ from pathlib import Path
 # Configure location for logs
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = Path(BASE_DIR, 'logs')
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
 # Logger
 logging_config = {
     'version': 1,
@@ -39,10 +41,18 @@ logging_config = {
             'formatter': 'detailed',
             'level': logging.ERROR,
         },
+        'critical': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': Path(LOGS_DIR, 'critical.log'),
+            'maxBytes': 10485760,  # 1 MB
+            'backupCount': 10,
+            'formatter': 'detailed',
+            'level': logging.CRITICAL,
+        }
     },
     'loggers': {
         'root': {
-            'handlers': ['console', 'info', 'error'],
+            'handlers': ['console', 'info', 'error', 'critical'],
             'level': logging.DEBUG,
             'propagate': True,
         },

@@ -1,11 +1,13 @@
 import argparse
+from email import message
 import data
 import models
 import engine
 import torch
 import logging
 from rich.logging import RichHandler
-from config import logging_config
+from src.logging_config import logging_config
+from utils import ParameterError
 
 
 logging.config.dictConfig(logging_config)
@@ -38,6 +40,30 @@ workers = args.workers
 early_stopping = args.early_stopping
 nb_epochs = args.nb_epochs
 percentage = args.percentage
+
+# Checking if parameters are valid
+if (nb_epochs is None) or (nb_epochs <= 0):
+    message = 'Number of epochs should be at least 01 or greater .'
+    logger.critical(message)
+    raise ParameterError(nb_epochs, message)
+
+if early_stopping >= nb_epochs:
+    message = 'Early_stopping be lesser tahn number of epochs .'
+    logger.critical(message)
+    raise ParameterError(early_stopping, message)
+
+if percentage < 1.0:
+    if percentage > 0.5:
+        message = 'Percentage of validation data should be between 0.0 and 0.5 .'
+        logger.error(message)
+    if percentage < 0:
+        message = 'Percentage of validation data should be positive .'
+        logger.critical(message)
+        raise ParameterError(percentage, message)
+else:
+    message = 'Percentage should be lesser than 1.0 .'
+    logger.critical(message)
+    raise ParameterError(percentage, message)
 
 # Setting the device cuda or cpu
 if (torch.cuda.is_available() == True) and (args.cuda == True):
