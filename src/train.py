@@ -6,7 +6,7 @@ import engine
 import torch
 import logging
 from rich.logging import RichHandler
-from src.logging_config import logging_config
+from logging_config import logging_config
 from utils import ParameterError
 
 
