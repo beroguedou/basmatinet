@@ -33,9 +33,7 @@ This project will consist to:
 - [ ] Create K8s service endpoint for external InfluxDB database.
 - [ ] Create K8s secret for external InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
-- [ ] Add multi-threading for the api.
-- [ ] Add requests batching to the api to make it faster.
-- [ ] Load test with locust.
+- [ ] Makefile to facilate some operations
 
 ## 1- Install project's dependencies and packages
 This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
