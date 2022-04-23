@@ -35,6 +35,18 @@ This project will consist to:
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
 - [ ] Makefile to facilate some operations
 
+
+## 1- Download the dataset
+The dataset is the Rice Image dataset that we can find on: https://www.muratkoklu.com/datasets/ . It regroups 05 classes of images data that can be used for classification. After downloading it  unzip and get it ready by ensuring that you have the following aborescence.
+
+```bash
+Rice_Image_Dataset/
+          ├── Arborio
+          ├── Basmati
+          ├── Ipsala
+          ├── Jasmine
+          └── Karacadag
+```
 ## 1- Install project's dependencies and packages
 This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
 
@@ -61,18 +73,12 @@ $ python src/train.py "/path/to/rice_image_dataset/" \
 ## 3- Dockerize the model and push the Docker Image to Google Container Registry
 
 1st step: Let's build a docker images
+
 ```bash
 # Move into the app directory
-$ cd basmatinet/app
-
-# Build the machine learning serving app image
-$ docker build -t basmatinet .
-
-# Run a model serving app container outside of kubernetes (optionnal)
-$ docker run -d -p 5000:5000 basmatinet
-
-# Try an inference to test the endpoint
-$ python frontend.py --filename "../images/arborio.jpg" --host-ip "0.0.0.0"
+$ make serve
+# Try an inference to test the endpoint locally
+$ make predict
 ```
 
 2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io" and you should enable GCR Api on google cloud platform.
@@ -99,21 +105,23 @@ $ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --
 
 ## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
 Create the deployement and the service on a kubernetes cluster.
+
 ```bash
-# In the app directory
-$ cd basmatinet/app
-# Create the namespace
-$ kubectl apply -f k8s/namespace.yaml
-# Create the deployment
-$ kubectl apply -f k8s/basmatinet-deployment.yaml --namespace=mlops-test
-# Create the service
-$ kubectl apply -f k8s/basmatinet-service.yaml --namespace=mlops-test
+# Create namespaces on GKE for dev, staging and production environment
+$ make gkenvs
+
+# Deploy to Google Cloud Platform
+$ make deploy-test
 
 # Check that everything is alright with the following command and look for basmatinet-app in the output
-$ kubectl get services
+$ make get-test-svc
 
 # The output should look like
 NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
 basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
 ```
-Take the EXTERNAL-IP and test your service with the file basmatinet/app/frontend.py . Then you can cook your jollof with some basmatinet!!!
+Take the EXTERNAL-IP and test your service with the file frontend.py . Then you can cook your jollof with some basmatinet!!!
+
+```bash
+$ python app/frontend --host-ip [EXTERNAL-IP]
+```
