@@ -37,7 +37,7 @@ This project will consist to:
 
 
 ## 1- Download the dataset
-The dataset is the Rice Image dataset that we can find on: https://www.muratkoklu.com/datasets/ . It regroups 05 classes of images data that can be used for classification. After downloading it  unzip and get it ready by ensuring that you have the following aborescence.
+The dataset is the Rice Image dataset that we can find on: https://www.muratkoklu.com/datasets/ . It regroups 05 classes of images data that can be used for classification. After downloading it  unzip and get it ready by ensuring that you have the following aborescence. Be sure you save the PATH-TO-DATASET
 
 ```bash
 Rice_Image_Dataset/
@@ -48,27 +48,16 @@ Rice_Image_Dataset/
           └── Karacadag
 ```
 ## 1- Install project's dependencies and packages
-This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
-
-Python version: 3.8.12
+This project was developped in conda environment so if you have conda installed, just use the following command to create the basmatienv with all requirements installed.
 
 ```bash
-# Move into the project root
-$ cd basmatinet
+$ make condaenv
 
-# 1st alternative: using pip
-$ pip install -r requirements.txt
-# 2nd alternative
-$ conda install --file requirements.txt
 ```
 
 ## 2- Train a basmatinet model
 ```bash
-$ python src/train.py "/path/to/rice_image_dataset/" \
-                     --batch-size 16 --nb-epochs 200 \
-                     --workers 8 --early-stopping 5  \
-                     --percentage 0.1 --cuda
-
+$ make train PATH_TO_DATASET=[PATH-TO-DATASET]
 ```
 ## 3- Dockerize the model and push the Docker Image to Google Container Registry
 
@@ -124,4 +113,11 @@ Take the EXTERNAL-IP and test your service with the file frontend.py . Then you 
 
 ```bash
 $ python app/frontend --host-ip [EXTERNAL-IP]
+```
+
+## 6- Clean the conda environnement
+If you want to delete the conda environment use the following command:
+
+```bash
+$ make clean
 ```
