@@ -1,5 +1,10 @@
 # Variables
 PATH_TO_DATASET := "/path/to/rice_image_dataset/"
+HOST_IP := "0.0.0.0"
+FILENAME := "./images/arborio.jpg"
+PROJECT_ID := ""
+HOSTNAME := ""
+BATCH_SIZE := 16
 
 # Build the training conda environment
 condaenv:
@@ -12,7 +17,7 @@ clean:
 .PHONY: train
 train:
 	python src/train.py ${PATH_TO_DATASET} \
-                     --batch-size 16 --nb-epochs 200 \
+                     --batch-size ${BATCH_SIZE} --nb-epochs 200 \
                      --workers 8 --early-stopping 5  \
                      --percentage 0.1 --cuda
 
@@ -22,7 +27,17 @@ serve:
 	docker run -d -p 5001:5000 basmatinet
 # Make a prediction with a sample of image in the folder images
 predict:
-	python app/frontend.py --filename "./images/arborio.jpg" --host-ip "0.0.0.0"
+	python app/frontend.py --filename ${FILENAME} --host-ip ${HOST_IP}
+#
+image-push:
+	docker tag basmatinet ${HOSTNAME}/${PROJECT_ID}/basmatinet && \
+	docker push ${HOSTNAME}/${PROJECT_ID}/basmatinet
+# Make a K8s cluster on GKE and connect to it
+k8s-cluster:
+	gcloud container clusters create k8s-gke-cluster --num-nodes 3 \
+					--machine-type g1-small --zone europe-west1-b && \
+	gcloud container clusters get-credentials k8s-gke-cluster \
+					--zone us-west1-b --project ${PROJECT_ID}
 # Create the namespaces if they aren't.
 gkenvs:
 	kubectl apply -f app/k8s/namespace.yaml

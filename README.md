@@ -27,13 +27,14 @@ This project will consist to:
 - [x] Orchestrate the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [x] Pre-commit git hook.
 - [x] Logging during training.
+- [x] Makefile to facilate some operations
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
 - [ ] Save images and predictions in InfluxDB database.
 - [ ] Create K8s service endpoint for external InfluxDB database.
 - [ ] Create K8s secret for external InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
-- [ ] Makefile to facilate some operations
+
 
 
 ## 1- Download the dataset
@@ -47,7 +48,7 @@ Rice_Image_Dataset/
           ├── Jasmine
           └── Karacadag
 ```
-## 1- Install project's dependencies and packages
+## 2- Install project's dependencies and packages
 This project was developped in conda environment so if you have conda installed, just use the following command to create the basmatienv with all requirements installed.
 
 ```bash
@@ -55,11 +56,11 @@ $ make condaenv
 
 ```
 
-## 2- Train a basmatinet model
+## 3- Train a basmatinet model
 ```bash
-$ make train PATH_TO_DATASET=[PATH-TO-DATASET]
+$ make train PATH_TO_DATASET=[PATH-TO-DATASET] BATCH_SIZE=16
 ```
-## 3- Dockerize the model and push the Docker Image to Google Container Registry
+## 4- Dockerize the model and push the Docker Image to Google Container Registry
 
 1st step: Let's build a docker images
 
@@ -67,32 +68,26 @@ $ make train PATH_TO_DATASET=[PATH-TO-DATASET]
 # Move into the app directory
 $ make serve
 # Try an inference to test the endpoint locally
-$ make predict
+$ make predict FILENAME="./images/arborio.jpg" HOST_IP=[EXTERNAL-IP]
 ```
 
 2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io" and you should enable GCR Api on google cloud platform.
 
 ```bash
-# Re-tag the image and include the container in the image tag
-$ docker tag basmatinet [HOSTNAME]/[PROJECT-ID]/basmatinet
-
-# Push to container registry
-$ docker push [HOSTNAME]/[PROJECT-ID]/basmatinet
+# Re-tag the image and push to container registry
+$ make image-push HOSTNAME=[HOSTNAME] PROJECT_ID=[PROJECT-ID]
 ```
 
-## 4- Create a kubernetes cluster
+## 5- Create a kubernetes cluster
 First of all you should enable GKE Api on google cloud platform. And go to the cloud shell or stay on your host if you have gcloud binary already installed.
 
 ```bash
-# Start a cluster
-$ gcloud container clusters create k8s-gke-cluster --num-nodes 3 --machine-type g1-small --zone europe-west1-b
-
-# Connect to the cluster
-$ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --project [PROJECT_ID]
+# Start a cluster and connect to it
+$ make k8s-cluster PROJECT_ID=[PROJECT-ID]
 
 ```
 
-## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
+## 6- Deploy the application on Kubernetes (Google Kubernetes Engine)
 Create the deployement and the service on a kubernetes cluster.
 
 ```bash
@@ -112,10 +107,10 @@ basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2
 Take the EXTERNAL-IP and test your service with the file frontend.py . Then you can cook your jollof with some basmatinet!!!
 
 ```bash
-$ python app/frontend --host-ip [EXTERNAL-IP]
+$ make predict FILENAME="./images/arborio.jpg" HOST_IP=[EXTERNAL-IP]
 ```
 
-## 6- Clean the conda environnement
+## 7- Clean the conda environnement
 If you want to delete the conda environment use the following command:
 
 ```bash
