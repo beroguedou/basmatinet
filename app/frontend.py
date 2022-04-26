@@ -11,7 +11,7 @@ front_parser.add_argument('--host-ip', type=str, default='0.0.0.0',
 
 args = front_parser.parse_args()
 filename = args.filename
-api_url = 'http://' + args.host_ip + ':5000/serving/predict'
+api_url = 'http://' + args.host_ip + ':5001/serving/predict'
 
 with open(filename, 'rb') as img:
     img_b64 = base64.b64encode(img.read())

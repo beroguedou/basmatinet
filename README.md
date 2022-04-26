@@ -27,93 +27,92 @@ This project will consist to:
 - [x] Orchestrate the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [x] Pre-commit git hook.
 - [x] Logging during training.
+- [x] Makefile to facilate some operations
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
 - [ ] Save images and predictions in InfluxDB database.
 - [ ] Create K8s service endpoint for external InfluxDB database.
 - [ ] Create K8s secret for external InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
-- [ ] Makefile to facilate some operations
 
-## 1- Install project's dependencies and packages
-This project was developped in conda environment but you can use any python virtual environment but you should have installed some packages that are in basmatinet/requirements.txt
 
-Python version: 3.8.12
+
+## 1- Download the dataset
+The dataset is the Rice Image dataset that we can find on: https://www.muratkoklu.com/datasets/ . It regroups 05 classes of images data that can be used for classification. After downloading it  unzip and get it ready by ensuring that you have the following aborescence. Be sure you save the PATH-TO-DATASET
 
 ```bash
-# Move into the project root
-$ cd basmatinet
-
-# 1st alternative: using pip
-$ pip install -r requirements.txt
-# 2nd alternative
-$ conda install --file requirements.txt
+Rice_Image_Dataset/
+          ├── Arborio
+          ├── Basmati
+          ├── Ipsala
+          ├── Jasmine
+          └── Karacadag
 ```
+## 2- Install project's dependencies and packages
+This project was developped in conda environment so if you have conda installed, just use the following command to create the basmatienv with all requirements installed.
 
-## 2- Train a basmatinet model
 ```bash
-$ python src/train.py "/path/to/rice_image_dataset/" \
-                     --batch-size 16 --nb-epochs 200 \
-                     --workers 8 --early-stopping 5  \
-                     --percentage 0.1 --cuda
+$ make condaenv
 
 ```
-## 3- Dockerize the model and push the Docker Image to Google Container Registry
+
+## 3- Train a basmatinet model
+```bash
+$ make train PATH_TO_DATASET=[PATH-TO-DATASET] BATCH_SIZE=16
+```
+## 4- Dockerize the model and push the Docker Image to Google Container Registry
 
 1st step: Let's build a docker images
+
 ```bash
 # Move into the app directory
-$ cd basmatinet/app
-
-# Build the machine learning serving app image
-$ docker build -t basmatinet .
-
-# Run a model serving app container outside of kubernetes (optionnal)
-$ docker run -d -p 5000:5000 basmatinet
-
-# Try an inference to test the endpoint
-$ python frontend.py --filename "../images/arborio.jpg" --host-ip "0.0.0.0"
+$ make serve
+# Try an inference to test the endpoint locally
+$ make predict FILENAME="./images/arborio.jpg" HOST_IP=[EXTERNAL-IP]
 ```
 
 2nd step: Let's push the docker image into a Google Container Registry. But you should create a google cloud project to have PROJECT-ID and in this case you HOSTNAME will be "gcr.io" and you should enable GCR Api on google cloud platform.
 
 ```bash
-# Re-tag the image and include the container in the image tag
-$ docker tag basmatinet [HOSTNAME]/[PROJECT-ID]/basmatinet
-
-# Push to container registry
-$ docker push [HOSTNAME]/[PROJECT-ID]/basmatinet
+# Re-tag the image and push to container registry
+$ make image-push HOSTNAME=[HOSTNAME] PROJECT_ID=[PROJECT-ID]
 ```
 
-## 4- Create a kubernetes cluster
+## 5- Create a kubernetes cluster
 First of all you should enable GKE Api on google cloud platform. And go to the cloud shell or stay on your host if you have gcloud binary already installed.
 
 ```bash
-# Start a cluster
-$ gcloud container clusters create k8s-gke-cluster --num-nodes 3 --machine-type g1-small --zone europe-west1-b
-
-# Connect to the cluster
-$ gcloud container clusters get-credentials k8s-gke-cluster --zone us-west1-b --project [PROJECT_ID]
+# Start a cluster and connect to it
+$ make k8s-cluster PROJECT_ID=[PROJECT-ID]
 
 ```
 
-## 4- Deploy the application on Kubernetes (Google Kubernetes Engine)
+## 6- Deploy the application on Kubernetes (Google Kubernetes Engine)
 Create the deployement and the service on a kubernetes cluster.
+
 ```bash
-# In the app directory
-$ cd basmatinet/app
-# Create the namespace
-$ kubectl apply -f k8s/namespace.yaml
-# Create the deployment
-$ kubectl apply -f k8s/basmatinet-deployment.yaml --namespace=mlops-test
-# Create the service
-$ kubectl apply -f k8s/basmatinet-service.yaml --namespace=mlops-test
+# Create namespaces on GKE for dev, staging and production environment
+$ make gkenvs
+
+# Deploy to Google Cloud Platform
+$ make deploy-test
 
 # Check that everything is alright with the following command and look for basmatinet-app in the output
-$ kubectl get services
+$ make get-test-svc
 
 # The output should look like
 NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
 basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
 ```
-Take the EXTERNAL-IP and test your service with the file basmatinet/app/frontend.py . Then you can cook your jollof with some basmatinet!!!
+Take the EXTERNAL-IP and test your service with the file frontend.py . Then you can cook your jollof with some basmatinet!!!
+
+```bash
+$ make predict FILENAME="./images/arborio.jpg" HOST_IP=[EXTERNAL-IP]
+```
+
+## 7- Clean the conda environnement
+If you want to delete the conda environment use the following command:
+
+```bash
+$ make clean
+```
