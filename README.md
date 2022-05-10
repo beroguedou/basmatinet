@@ -1,7 +1,7 @@
 
-![Maintainer](https://img.shields.io/badge/maintainer-Béranger%20GUEDOU-blue) 
-[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
-![GitHub Contributors Image](https://contrib.rocks/image?repo=beroguedou/basmatinet)
+![Maintainer](https://img.shields.io/badge/maintainer-Béranger%20GUEDOU-lightgreen) 
+[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/green?icon=github)](https://github.com/Naereen/badges/)
+
 
 
 
