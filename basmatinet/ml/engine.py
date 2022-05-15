@@ -85,7 +85,7 @@ def all_epochs_training_and_validation(logger, train_dataloader, val_dataloader,
                 best_val_loss = val_loss
                 counter = 0
                 # Save the model
-                save_path = os.path.join('app', model_name)
+                save_path = os.path.join('basmatinet/app', model_name)
                 torch.save(model.state_dict(), save_path)
             else:
                 counter += 1

@@ -6,28 +6,23 @@ PROJECT_ID := ""
 HOSTNAME := ""
 BATCH_SIZE := 16
 
-# Build the training conda environment
-condaenv:
-	conda create --name basmatienv --file conda-env.yaml python=3.8.12
-	conda activate basmatienv
-# Clean the conda environment
-clean:
-	conda env remove -n basmatienv
 # Train a model
 .PHONY: train
 train:
-	python src/train.py ${PATH_TO_DATASET} \
+	python basmatinet/ml/train.py ${PATH_TO_DATASET} \
                      --batch-size ${BATCH_SIZE} --nb-epochs 200 \
                      --workers 8 --early-stopping 5  \
                      --percentage 0.1 --cuda
-
-# Build and serve the model
+# See MLFlow tracking interface
+tracking:
+	mlflow ui
+# Build and serve the model  docker build -t basmatinet basmatinet/app/. &&
 serve:
-	docker build -t basmatinet app/. && \
-	docker run -d -p 5001:5000 basmatinet
+	docker build -t basmatinet -f basmatinet/app/Dockerfile . && \
+	docker run -d -p 5001:5001 basmatinet
 # Make a prediction with a sample of image in the folder images
 predict:
-	python app/frontend.py --filename ${FILENAME} --host-ip ${HOST_IP}
+	python basmatinet/app/frontend.py --filename ${FILENAME} --host-ip ${HOST_IP}
 #
 image-push:
 	docker tag basmatinet ${HOSTNAME}/${PROJECT_ID}/basmatinet && \

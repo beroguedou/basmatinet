@@ -1,5 +1,5 @@
 
-![Maintainer](https://img.shields.io/badge/maintainer-Béranger%20GUEDOU-lightgreen) 
+![Maintainer](https://img.shields.io/badge/maintainer-Béranger%20GUEDOU-lightgreen)
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/green?icon=github)](https://github.com/Naereen/badges/)
 
 
@@ -56,17 +56,37 @@ Rice_Image_Dataset/
           └── Karacadag
 ```
 ## 2- Install project's dependencies and packages
+1st step: Install
+
 This project was developped in conda environment so if you have conda installed, just use the following command to create the basmatienv with all requirements installed.
 
 ```bash
-$ make condaenv
+$ conda create --name basmatienv --file conda-env.yaml python=3.8.12
+$	conda activate basmatienv
 
 ```
 
+2nd step: Clean the conda environment
+```bash
+$ conda env remove -n basmatienv
+
+```
 ## 3- Train a basmatinet model
+1st step: Train the model
 ```bash
 $ make train PATH_TO_DATASET=[PATH-TO-DATASET] BATCH_SIZE=16
 ```
+
+2nd step: See the model's tracking metrics.
+Open a new terminal:
+```bash
+# Activate the conda environnement
+$ conda activate basmatienv
+# Set up MLFlow's server
+$ make tracking
+```
+The training process tracks the metrics with MLFlow tracking. To monitore it the model metrics, go to the url:
+
 ## 4- Dockerize the model and push the Docker Image to Google Container Registry
 
 1st step: Let's build a docker images

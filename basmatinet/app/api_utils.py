@@ -16,7 +16,7 @@ class BasmatinetPrediction():
 
     def __init__(self):
         # Load the model
-        self.model = RiceNet()
+        self.model = RiceNet(pretrained=False)
         self.model.load_state_dict(torch.load(
             MODEL_PATH, map_location=torch.device('cpu')))
         # Inference image transformations
