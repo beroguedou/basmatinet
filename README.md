@@ -61,10 +61,12 @@ Rice_Image_Dataset/
 This project was developped in conda environment so if you have conda installed, just use the following command to create the basmatienv with all requirements installed.
 
 ```bash
+# Create the environment from the configuration
 $ conda create --name basmatienv --file conda-env.yaml python=3.8.12
-$	conda activate basmatienv
-
+# Activate it
+$ conda activate basmatienv
 ```
+
 
 2nd step: Clean the conda environment
 ```bash
