@@ -129,7 +129,7 @@ $ make get-test-svc
 
 # The output should look like
 NAME             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
-basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5000:xxxx/TCP      2m3s
+basmatinet-app   LoadBalancer   xx.xx.xx.xx   xx.xx.xx.xx   5001:xxxx/TCP      2m3s
 ```
 Take the EXTERNAL-IP and test your service with the file frontend.py . Then you can cook your jollof with some basmatinet!!!
 
