@@ -37,9 +37,6 @@ This project will consist to:
 - [x] Makefile to facilate some operations
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
-- [ ] Save images and predictions in InfluxDB database.
-- [ ] Create K8s service endpoint for external InfluxDB database.
-- [ ] Create K8s secret for external InfluxDB database.
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
 
 

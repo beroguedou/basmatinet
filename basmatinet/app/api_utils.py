@@ -5,8 +5,9 @@ from PIL import Image
 import albumentations as A
 import numpy as np
 import torch
-from models import RiceNet
+#from models import RiceNet
 import torch.nn.functional as F
+
 
 MODEL_PATH = './basmatinet.pth'
 CONFIG_PATH = './app_config.yaml'
@@ -14,19 +15,24 @@ CONFIG_PATH = './app_config.yaml'
 
 class BasmatinetPrediction():
 
-    def __init__(self):
+    def __init__(self, model_arch, model_path=MODEL_PATH, config_path=CONFIG_PATH):
         # Load the model
-        self.model = RiceNet(pretrained=False)
-        self.model.load_state_dict(torch.load(
-            MODEL_PATH, map_location=torch.device('cpu')))
+        self.model_path = model_path
+        self.config_path = config_path
+        self.model_arch = model_arch
         # Inference image transformations
         self.transforms = A.Compose([
             A.Resize(width=224, height=224)
         ])
 
     @property
+    def model(self):
+        return self.model_arch.load_state_dict(torch.load(
+            self.model_path, map_location=torch.device('cpu')))
+
+    @property
     def labels_map_reverse(self):
-        with open(CONFIG_PATH, 'r') as file:
+        with open(self.config_path, 'r') as file:
             content = yaml.safe_load(file)
         return content['labels_map_reverse']
 
@@ -45,6 +51,7 @@ class BasmatinetPrediction():
         return X
 
     def _predict(self, X):
+        self.model.eval()
         out = self.model(X).squeeze(0)
         out = F.softmax(out, dim=-1)
         proba, index = torch.topk(out, 1)
