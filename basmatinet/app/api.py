@@ -1,8 +1,15 @@
 from flask import Flask, jsonify, make_response, request
+from models import RiceNet
 from api_utils import BasmatinetPrediction
 
 
-predictor = BasmatinetPrediction()
+MODEL_PATH = './basmatinet.pth'
+CONFIG_PATH = './app_config.yaml'
+
+model_arch = RiceNet(pretrained=False)
+predictor = BasmatinetPrediction(model_arch=model_arch,
+                                 model_path=MODEL_PATH,
+                                 config_path=CONFIG_PATH)
 
 app = Flask(__name__)
 

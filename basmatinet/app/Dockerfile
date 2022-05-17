@@ -9,7 +9,7 @@ USER mluser:mlgroup
 WORKDIR /usr/src/app
 COPY --chown=mluser:mlgroup basmatinet/app/api_utils.py basmatinet/app/api.py \
     basmatinet/app/basmatinet.pth basmatinet/app/app_config.yaml \
-    basmatinet/ml/models.py ./
+    basmatinet/app/models.py ./
 
 EXPOSE 5001
 

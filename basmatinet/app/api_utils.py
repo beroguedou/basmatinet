@@ -5,21 +5,17 @@ from PIL import Image
 import albumentations as A
 import numpy as np
 import torch
-#from models import RiceNet
 import torch.nn.functional as F
-
-
-MODEL_PATH = './basmatinet.pth'
-CONFIG_PATH = './app_config.yaml'
 
 
 class BasmatinetPrediction():
 
-    def __init__(self, model_arch, model_path=MODEL_PATH, config_path=CONFIG_PATH):
+    def __init__(self, model_arch, model_path, config_path):
         # Load the model
         self.model_path = model_path
         self.config_path = config_path
         self.model_arch = model_arch
+
         # Inference image transformations
         self.transforms = A.Compose([
             A.Resize(width=224, height=224)
@@ -27,8 +23,10 @@ class BasmatinetPrediction():
 
     @property
     def model(self):
-        return self.model_arch.load_state_dict(torch.load(
+        self.model_arch.load_state_dict(torch.load(
             self.model_path, map_location=torch.device('cpu')))
+        self.model_arch.eval()
+        return self.model_arch
 
     @property
     def labels_map_reverse(self):
@@ -51,12 +49,12 @@ class BasmatinetPrediction():
         return X
 
     def _predict(self, X):
-        self.model.eval()
-        out = self.model(X).squeeze(0)
-        out = F.softmax(out, dim=-1)
-        proba, index = torch.topk(out, 1)
-        index = index.item()
-        proba = round(proba.item(), 4)
+        with torch.no_grad():
+            out = self.model(X).squeeze(0)
+            out = F.softmax(out, dim=-1)
+            proba, index = torch.topk(out, 1)
+            index = index.item()
+            proba = round(proba.item(), 4)
         return proba, index
 
     def _post_process(self, proba, index):

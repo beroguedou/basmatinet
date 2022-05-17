@@ -2,7 +2,7 @@ import pytest
 import base64
 import os
 import torch
-from basmatinet.ml.models import RiceNet
+from basmatinet.app.models import RiceNet
 from basmatinet.app.api_utils import BasmatinetPrediction
 
 
@@ -23,8 +23,7 @@ class TestBasmatinetPrediction():
 
     def setup_method(self):
         self.model_arch = RiceNet(pretrained=False)
-
-        self.predictor = BasmatinetPrediction(self.model_arch,
+        self.predictor = BasmatinetPrediction(model_arch=self.model_arch,
                                               model_path=MODEL_PATH,
                                               config_path=CONFIG_PATH)
 
