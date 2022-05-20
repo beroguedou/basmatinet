@@ -34,10 +34,11 @@ This project will consist to:
 - [x] Orchestrate the prediction service with Kubernetes (k8s) on Google Cloud Platform.
 - [x] Pre-commit git hook.
 - [x] Logging during training.
-- [x] Makefile to facilate some operations
+- [x] Makefile to facilate some operations.
+- [ ] Unitary tests with Pytest (Fixtures and Mocks).
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
-- [ ] Unitary tests with Pytest (Fixtures and Mocks).
+
 
 
 

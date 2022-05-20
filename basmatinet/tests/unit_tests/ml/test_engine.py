@@ -31,7 +31,6 @@ class TestBasmatinetEngine():
 
     def test_one_epoch_training(self, datapath):
         # Dataset
-
         dataset = data.RiceDataset(datapath,
                                    train=True,
                                    percentage=0.2)
@@ -52,7 +51,7 @@ class TestBasmatinetEngine():
     def test_one_epoch_validation(self, datapath):
 
         val_dataset = data.RiceDataset(datapath,
-                                       train=True,
+                                       train=False,
                                        percentage=0.2)
 
         # Dataloader
