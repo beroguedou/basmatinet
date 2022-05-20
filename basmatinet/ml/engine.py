@@ -33,6 +33,7 @@ def one_epoch_training(dataloader, model, criterion, optimizer, device, breakpoi
 def one_epoch_validation(dataloader, model, criterion, device, breakpoint=4):
     """
     """
+
     model.eval()
 
     val_loss = 0.0
@@ -55,7 +56,7 @@ def one_epoch_validation(dataloader, model, criterion, device, breakpoint=4):
 def all_epochs_training_and_validation(logger, train_dataloader, val_dataloader,
                                        model, criterion, optimizer, device,
                                        nb_epochs=20, early_stopping=5,
-                                       model_name='basmatinet.pth'):
+                                       model_name='basmatinet.pth', breakpoint=2):
     """
     """
     with mlflow.start_run():
@@ -71,9 +72,9 @@ def all_epochs_training_and_validation(logger, train_dataloader, val_dataloader,
 
         for epoch in range(nb_epochs):
             train_loss = one_epoch_training(
-                train_dataloader, model, criterion, optimizer, device)
+                train_dataloader, model, criterion, optimizer, device, breakpoint=breakpoint)
             val_loss = one_epoch_validation(
-                val_dataloader, model, criterion, device)
+                val_dataloader, model, criterion, device, breakpoint=breakpoint)
             # Tracking in mlflow
             mlflow.log_metric('train_loss', train_loss, epoch+1)
             mlflow.log_metric('val_loss', val_loss, epoch+1)

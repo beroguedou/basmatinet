@@ -38,6 +38,7 @@ This project will consist to:
 - [ ] Unitary tests with Pytest (Fixtures and Mocks).
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
+- [ ] Make docstring and typing.
 
 
 

@@ -110,4 +110,5 @@ engine.all_epochs_training_and_validation(logger,
                                           device,
                                           nb_epochs=nb_epochs,
                                           early_stopping=early_stopping,
-                                          model_name='basmatinet.pth')
+                                          model_name='basmatinet.pth',
+                                          breakpoint=None)
