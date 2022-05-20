@@ -1,6 +1,7 @@
 import pytest
 import base64
 import os
+import PIL
 import torch
 from basmatinet.app.models import RiceNet
 from basmatinet.app.api_utils import BasmatinetPrediction
@@ -40,7 +41,8 @@ class TestBasmatinetPrediction():
         assert self.predictor.model is not None
 
     def test_load_image(self, image):
-        assert self.predictor._load_image(image)
+        image = self.predictor._load_image(image)
+        assert isinstance(image, PIL.JpegImagePlugin.JpegImageFile)
 
     @pytest.mark.dependency(depends=[test_load_image])
     def test_preprocess(self, image):
@@ -59,6 +61,13 @@ class TestBasmatinetPrediction():
 
     def test_post_process(self):
         proba, index = 0.2373, 1
+        expected = sorted(['category', 'probability'])
         response = self.predictor._post_process(proba, index)
-        assert sorted(['category', 'probability']
-                      ) == sorted(list(response.keys()))
+        assert expected == sorted(list(response.keys()))
+
+    def test_inference_pipeline(self, image, mocker):
+        X = torch.randn([1, 3, 224, 224])
+        mocker.patch.object(BasmatinetPrediction, 'model',
+                            return_value=self.model_arch(X))
+        output = self.predictor.inference_pipeline(image)
+        assert isinstance(output, dict)

@@ -4,13 +4,13 @@ import torch
 import mlflow
 
 
-def one_epoch_training(dataloader, model, criterion, optimizer, device):
+def one_epoch_training(dataloader, model, criterion, optimizer, device, breakpoint=20):
     """
     """
     model.train()
     train_loss = 0.0
     for i, data in enumerate(dataloader):
-        if i == 20:
+        if i == breakpoint:
             break
         # Get the inputs data and move to device
         images, labels = data
@@ -30,7 +30,7 @@ def one_epoch_training(dataloader, model, criterion, optimizer, device):
     return train_loss / len(dataloader)
 
 
-def one_epoch_validation(dataloader, model, criterion, device):
+def one_epoch_validation(dataloader, model, criterion, device, breakpoint=4):
     """
     """
     model.eval()
@@ -38,7 +38,7 @@ def one_epoch_validation(dataloader, model, criterion, device):
     val_loss = 0.0
     with torch.no_grad():
         for i, data in enumerate(dataloader):
-            if i == 4:
+            if i == breakpoint:
                 break
             # Get the inputs data and move to device
             images, labels = data

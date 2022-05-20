@@ -1,5 +1,5 @@
 # Variables
-PATH_TO_DATASET := "/path/to/rice_image_dataset/"
+PATH_TO_DATASET := "/home/beranger/Downloads/Rice_Image_Dataset/"
 HOST_IP := "0.0.0.0"
 FILENAME := "./images/arborio.jpg"
 PROJECT_ID := ""
@@ -23,6 +23,11 @@ serve:
 # Make a prediction with a sample of image in the folder images
 predict:
 	python basmatinet/app/frontend.py --filename ${FILENAME} --host-ip ${HOST_IP}
+
+# Unitary test
+tests:
+	pytest -s -q basmatinet/tests/unit_tests/app/test_api_utils.py --disable-pytest-warnings --datapath None && \
+	pytest -s -q basmatinet/tests/unit_tests/ml/test_engine.py --datapath ${PATH_TO_DATASET}  --disable-pytest-warnings
 #
 image-push:
 	docker tag basmatinet ${HOSTNAME}/${PROJECT_ID}/basmatinet && \
