@@ -6,6 +6,7 @@ import albumentations as A
 import numpy as np
 import torch
 import torch.nn.functional as F
+from flask import Flask, jsonify, make_response, request
 
 
 class BasmatinetPrediction():
@@ -72,3 +73,24 @@ class BasmatinetPrediction():
         # Post process the prediction and build a response
         response = self._post_process(proba, index)
         return response
+
+    ####
+
+
+def create_app(app, predictor):
+    @app.route('/serving/predict', methods=['POST'])
+    def prediction_pipeline():
+        # Get the image in base 64 and decode it
+        payload = request.form.to_dict(flat=False)
+        image_b64 = payload['image'][0]
+        # Pass it through the inference pipeline
+        try:
+            response = predictor.inference_pipeline(image_b64)
+        except Exception as e:
+            print(e)
+        return make_response(jsonify(response))
+
+    @app.route('/serving/healthcheck', methods=['GET'])
+    def healthcheck():
+        return 'Hello I am well !'
+####

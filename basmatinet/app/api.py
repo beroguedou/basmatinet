@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, make_response, request
 from models import RiceNet
-from api_utils import BasmatinetPrediction
+from api_utils import BasmatinetPrediction, create_app
 
 
 MODEL_PATH = './basmatinet.pth'
@@ -13,20 +13,7 @@ predictor = BasmatinetPrediction(model_arch=model_arch,
 
 app = Flask(__name__)
 
-
-@app.route('/serving/predict', methods=['POST'])
-def prediction_pipeline():
-    # Get the image in base 64 and decode it
-    payload = request.form.to_dict(flat=False)
-    image_b64 = payload['image'][0]
-    # Pass it through the inference pipeline
-    response = predictor.inference_pipeline(image_b64)
-    return make_response(jsonify(response))
-
-
-@app.route('/serving/healthcheck', methods=['GET'])
-def healthcheck():
-    return 200
+create_app(app, predictor)
 
 
 if __name__ == '__main__':
