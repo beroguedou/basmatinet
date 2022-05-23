@@ -1,9 +1,10 @@
-from flask import Flask, jsonify, make_response, request
+import os
+from flask import Flask
 from models import RiceNet
 from api_utils import BasmatinetPrediction, create_app
 
 
-MODEL_PATH = './basmatinet.pth'
+MODEL_PATH = os.environ['MODEL']  # './basmatinet.pth'
 CONFIG_PATH = './app_config.yaml'
 
 model_arch = RiceNet(pretrained=False)

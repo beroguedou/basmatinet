@@ -18,8 +18,10 @@ train:
 tracking:
 	mlflow ui
 # Build and serve the model  docker build -t basmatinet basmatinet/app/. &&
-serve:
-	docker build -t basmatinet -f basmatinet/app/Dockerfile . && \
+build:
+	docker build -t basmatinet --build-arg MODEL="fake_basmatinet.pth" -f basmatinet/app/Dockerfile \
+	--progress=plain --no-cache .
+run:
 	docker run -d -p 5001:5001 basmatinet
 # Make a prediction with a sample of image in the folder images
 predict:
@@ -36,12 +38,12 @@ integration-tests:
 	pytest -s -q basmatinet/tests/integration_tests/test_train.py --datapath ${PATH_TO_DATASET}  --disable-pytest-warnings
 #
 image-push:
-	docker tag basmatinet ${HOSTNAME}/${PROJECT_ID}/basmatinet && \
+	docker tag basmatinet ${HOSTNAME}/${PROJECT_ID}/basmatinet
 	docker push ${HOSTNAME}/${PROJECT_ID}/basmatinet
 # Make a K8s cluster on GKE and connect to it
 k8s-cluster:
 	gcloud container clusters create k8s-gke-cluster --num-nodes 3 \
-					--machine-type g1-small --zone europe-west1-b \
+					--machine-type g1-small --zone europe-west1-b
 	gcloud container clusters get-credentials k8s-gke-cluster \
 					--zone us-west1-b --project ${PROJECT_ID}
 # Create the namespaces if they aren't.
@@ -49,7 +51,7 @@ gkenvs:
 	kubectl apply -f app/k8s/namespace.yaml
 # Create  deployment, service for test ong GKE
 deploy-test:
-	kubectl apply -f app/k8s/basmatinet-deployment.yaml --namespace=mlops-test \
+	kubectl apply -f app/k8s/basmatinet-deployment.yaml --namespace=mlops-test
 	kubectl apply -f app/k8s/basmatinet-service.yaml --namespace=mlops-test
 # See the service that we create
 get-test-svc:
