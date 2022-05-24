@@ -7,6 +7,10 @@ PROJECT_ID := ""
 HOSTNAME := ""
 BATCH_SIZE := 16
 
+
+# Build conda env for train and tests
+conda:
+	conda env create -f conda-env.yml
 # Train a model
 .PHONY: train
 train:
