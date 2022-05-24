@@ -1,11 +1,13 @@
 .ONESHELL:
 # Variables
-PATH_TO_DATASET := "/home/beranger/Downloads/Rice_Image_Dataset/"
+# PATH_TO_DATASET := "/home/beranger/Downloads/Rice_Image_Dataset/"
+PATH_TO_DATASET := "data-samples/"
 HOST_IP := "0.0.0.0"
 FILENAME := "./images/arborio.jpg"
 PROJECT_ID := ""
 HOSTNAME := ""
 BATCH_SIZE := 16
+
 
 # Train a model
 .PHONY: train
@@ -29,9 +31,10 @@ predict:
 
 # Unitary test
 unit-tests:
+
+	pytest -s -q basmatinet/tests/unit_tests/app/test_api_utils.py --datapath none --disable-pytest-warnings
+	pytest -s -q basmatinet/tests/unit_tests/app/test_api.py --datapath none --disable-pytest-warnings
 	pytest -s -q basmatinet/tests/unit_tests/ml/test_engine.py --datapath ${PATH_TO_DATASET}  --disable-pytest-warnings
-	pytest -s -q basmatinet/tests/unit_tests/app/test_api_utils.py --datapath ${PATH_TO_DATASET}  --disable-pytest-warnings
-	pytest -s -q basmatinet/tests/unit_tests/app/test_api.py --datapath ${PATH_TO_DATASET} --disable-pytest-warnings
 	pytest -s -q basmatinet/tests/unit_tests/ml/test_data.py --datapath ${PATH_TO_DATASET}  --disable-pytest-warnings
 # Integration test
 integration-tests:
