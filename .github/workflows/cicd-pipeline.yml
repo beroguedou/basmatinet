@@ -23,9 +23,9 @@ jobs:
     - name: Integration tests
       run: make integration-tests
       shell: bash -l {0}
-    #- name: Build Docker Image
-    #  run: |
-    #    make build && make run
-    #- name: Make a prediction to see if everything is working.
-    #  run: |
-    #    make predict
+    - name: Build Docker Image
+      run: make build && make run
+      shell: bash -l {0}
+    - name: Make a prediction to see if everything is working.
+      run:  make predict
+      shell: bash -l {0}
