@@ -1,4 +1,4 @@
-name: mlenv
+name: basmatienv
 channels:
   - pytorch
   - defaults
@@ -227,4 +227,3 @@ dependencies:
     - xgboost==1.5.2
     - xxhash==3.0.0
     - yarl==1.7.2
-prefix: /home/beranger/miniconda3/envs/mlenv

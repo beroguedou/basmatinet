@@ -35,7 +35,7 @@ This project will consist to:
 - [x] Pre-commit git hook.
 - [x] Logging during training.
 - [x] Makefile to facilate some operations.
-- [ ] Unitary tests with Pytest (Fixtures and Mocks).
+- [x] Unitary tests with Pytest (Fixtures and Mocks).
 - [ ] CI with github actions.
 - [ ] CD with terraform to build environment on Google Cloud Platform.
 - [ ] Make docstring and typing.
