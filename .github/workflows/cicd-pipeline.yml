@@ -1,0 +1,36 @@
+name: Python Package using Conda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.8.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.8.12
+    - name: Add conda to system path
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        echo $CONDA/bin >> $GITHUB_PATH
+        
+    #- name: Install dependencies
+    #  run: |
+    #    make conda 
+    #- name: Unit tests with pytest
+    #  run: |
+    #    make unit-tests
+    #- name: Integration tests
+    #  run: |
+    #    make integration-tests
+    #- name: Build Docker Image
+    #  run: |
+    #    make build && make run
+    #- name: Make a prediction to see if everything is working.
+    #  run: |
+    #    make predict
