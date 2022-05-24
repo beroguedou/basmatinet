@@ -1,6 +1,14 @@
-name: Python Package using Conda
+name: Basmatinet CI pipeline
 
-on: [push]
+on:
+  push:
+    branches:
+    - main
+    - dev
+  pull_request:
+    branches:
+    - main
+    - dev
 
 jobs:
   build-linux:
