@@ -1,4 +1,4 @@
-**/*.pth
+**/fake*.pth
 **/*.ipynb*
 **/__pycache__
 **/*cache*

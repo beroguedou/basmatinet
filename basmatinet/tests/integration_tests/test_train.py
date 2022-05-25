@@ -1,4 +1,5 @@
 import pytest
+import os
 from basmatinet.ml import (
     data,
     models,
@@ -102,4 +103,11 @@ def test_integration_train(datapath):
                                               early_stopping=early_stopping,
                                               model_name='fake_basmatinet.pth',
                                               breakpoint=3)
-    assert True
+    # To see if the training produced the expected output
+    assert os.path.isfile('basmatinet/app/fake_basmatinet.pth')
+
+
+def test_presence_model_to_deploy():
+    # To see if there is at least one model to deploy, change "basmatinet.pth"
+    # to model's name if needed.
+    assert os.path.isfile('basmatinet/app/basmatinet.pth')

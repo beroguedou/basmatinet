@@ -21,7 +21,7 @@ tracking:
 	mlflow ui
 # Build and serve the model  docker build -t basmatinet basmatinet/app/. &&
 build:
-	docker build -t basmatinet --build-arg MODEL="fake_basmatinet.pth" -f basmatinet/app/Dockerfile \
+	docker build -t basmatinet --build-arg MODEL="basmatinet.pth" -f basmatinet/app/Dockerfile \
 	--progress=plain --no-cache .
 run:
 	docker run -d -p 5001:5001 basmatinet
