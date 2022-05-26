@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mlops-test
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mlops-staging
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mlops-production

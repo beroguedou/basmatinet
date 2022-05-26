@@ -1,6 +1,7 @@
-**/*.pth
+**/fake*.pth
 **/*.ipynb*
 **/__pycache__
 **/*cache*
 **/cheatsheet.txt
-**/mlruns/*
+**/mlruns
+**/logs

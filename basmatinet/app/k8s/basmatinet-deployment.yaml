@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: basmatinet-app
+  name: basmatinet-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: basmatinet-app
+  template:
+    metadata:
+      labels:
+        app: basmatinet-app
+    spec:
+      containers:
+        - image: gcr.io/[PROJECT_ID]/[IMAGE]:[TAG]
+          name: basmatinet-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+              protocol: TCP
