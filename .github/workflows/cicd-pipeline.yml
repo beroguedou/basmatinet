@@ -4,11 +4,11 @@ on:
   push:
     branches:
     - main
-    - dev
+
   pull_request:
     branches:
     - main
-    - dev
+
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: mlops-cluster
@@ -86,7 +86,8 @@ jobs:
           --namespace=mlops-production --replicas=5
 
     - name: Create a service for the application
-      run: kubectl apply -f basmatinet/app/k8s/basmatinet-service.yaml --namespace=mlops-production
+      run: |-
+        kubectl apply -f basmatinet/app/k8s/basmatinet-service.yaml --namespace=mlops-production
 
     - name: Check if the service is good
       run: kubectl get services -n mlops-production
