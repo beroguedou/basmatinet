@@ -7,6 +7,7 @@ FILENAME := "./images/arborio.jpg"
 PROJECT_ID := ""
 HOSTNAME := ""
 BATCH_SIZE := 16
+PORT := 5001
 
 
 # Train a model
@@ -27,7 +28,7 @@ run:
 	docker run -d -p 5001:5001 basmatinet
 # Make a prediction with a sample of image in the folder images
 predict:
-	python basmatinet/app/frontend.py --filename ${FILENAME} --host-ip ${HOST_IP}
+	python basmatinet/app/frontend.py --filename ${FILENAME} --host-ip ${HOST_IP} --port ${PORT}
 
 # Unitary test
 unit-tests:
