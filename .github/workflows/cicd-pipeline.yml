@@ -64,7 +64,7 @@ jobs:
 
     - name: Configure Docker
       run:  |-
-        gcloud --quiet auth configure-dockergcloud --quiet auth configure-docker
+        gcloud --quiet auth configure-docker
     #- name: Push image to GCR
     #  run: docker push gcr.io/$PROJECT_ID/basmatinet:$TAG
 
