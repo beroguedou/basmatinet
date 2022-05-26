@@ -33,28 +33,28 @@ jobs:
         python-version: 3.8.12
         environment-file: conda-env.yaml
 
-    #- name: Activate the test environment
-    #  run: conda activate test
-    #  shell: bash -l {0}
+    - name: Activate the test environment
+      run: conda activate test
+      shell: bash -l {0}
 
-    #- name: Unit tests with pytest
-    #  run: make unit-tests
-    #  shell: bash -l {0}
+    - name: Unit tests with pytest
+      run: make unit-tests
+      shell: bash -l {0}
 
-    #- name: Integration tests
-    #  run: make integration-tests
-    #  shell: bash -l {0}
+    - name: Integration tests
+      run: make integration-tests
+      shell: bash -l {0}
 
-    #- name: Build Docker Image
-    #  run: make build && make run
-    #  shell: bash -l {0}
+    - name: Build Docker Image
+      run: make build && make run
+      shell: bash -l {0}
 
-    #- name: Make a prediction to see if everything is working.
-    #  run:  make predict
-    #  shell: bash -l {0}
+    - name: Make a prediction to see if everything is working.
+      run:  make predict
+      shell: bash -l {0}
 
-    #- name: Re-tag Docker image
-    #  run: docker tag basmatinet gcr.io/$PROJECT_ID/basmatinet:$TAG
+    - name: Re-tag Docker image
+      run: docker tag basmatinet gcr.io/$PROJECT_ID/basmatinet:$TAG
 
     - name: Setup Google Cloud CLI
       uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
@@ -63,16 +63,21 @@ jobs:
         project_id: ${{ secrets.GKE_PROJECT }}
 
     - name: Configure Docker
-      run:  |-
+      run: |-
         gcloud --quiet auth configure-docker
-    #- name: Push image to GCR
-    #  run: docker push gcr.io/$PROJECT_ID/basmatinet:$TAG
 
-    #- name: Get GKE Credentials
-    #  run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_CLUSTER_ZONE --project $PROJECT_ID
+    - name: Push image to GCR
+      run: |-
+        docker push gcr.io/$PROJECT_ID/basmatinet:$TAG
+
+    - name: Get GKE Credentials
+      run: |-
+        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $PROJECT_ID
+        kubectl get nodes
 
     #- name: Create namespace if it is not existant
-    #  run: kubectl apply -f app/k8s/namespace.yaml
+    #  run: |-
+    #    kubectl apply -f app/k8s/namespace.yaml
 
     #- name: Create a deployment for the application to GKE cluster
     #  run: kubectl apply -f app/k8s/basmatinet-deployment.yaml --namespace=mlops-test
