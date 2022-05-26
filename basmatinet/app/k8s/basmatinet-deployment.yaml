@@ -15,8 +15,9 @@ spec:
         app: basmatinet-app
     spec:
       containers:
-        - image: <DOCKER_IMAGE_NAME> # Docker image name, that we pushed to GCR
-          name: basmatinet
+        - image: gcr.io/PROJECT_ID/IMAGE:TAG
+          name: IMAGE
+          imagePullPolicy: Always
           ports:
-            - containerPort: 5000
+            - containerPort: 5001
               protocol: TCP

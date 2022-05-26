@@ -15,7 +15,7 @@ env:
   GKE_ZONE: us-central1-c
   DEPLOYMENT_NAME: basmatinet-app
   IMAGE: basmatinet
-  TAG: v1.1.0
+  TAG: v1.2.0
 
 jobs:
   setup-build-publish-deploy:
@@ -68,7 +68,7 @@ jobs:
 
     - name: Push image to GCR
       run: |-
-        docker push gcr.io/$PROJECT_ID/basmatinet:$TAG
+        docker push gcr.io/$PROJECT_ID/$IMAGE:$TAG
 
     - name: Get GKE Credentials
       run: |-
