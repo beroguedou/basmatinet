@@ -75,15 +75,15 @@ jobs:
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $PROJECT_ID
         kubectl get nodes
 
-    #- name: Create namespace if it is not existant
-    #  run: |-
-    #    kubectl apply -f app/k8s/namespace.yaml
+    - name: Create namespace if it is not existant
+      run: |-
+        kubectl apply -f app/k8s/namespace.yaml
 
-    #- name: Create a deployment for the application to GKE cluster
-    #  run: kubectl apply -f app/k8s/basmatinet-deployment.yaml --namespace=mlops-test
+    - name: Create a deployment for the application to GKE cluster
+      run: kubectl apply -f app/k8s/basmatinet-deployment.yaml --namespace=mlops-production
 
-    #- name: Create a service for the application
-    #  run: kubectl apply -f app/k8s/basmatinet-service.yaml --namespace=mlops-test
+    - name: Create a service for the application
+      run: kubectl apply -f app/k8s/basmatinet-service.yaml --namespace=mlops-production
 
-    #- name: Check if the service is good
-    #  run: kubectl get services -n mlops-test
+    - name: Check if the service is good
+      run: kubectl get services -n mlops-production
