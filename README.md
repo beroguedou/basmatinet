@@ -36,9 +36,10 @@ This project will consist to:
 - [x] Logging during training.
 - [x] Makefile to facilate some operations.
 - [x] Unitary tests with Pytest (Fixtures and Mocks).
-- [x] CI with github actions.
-- [ ] CD with terraform to build environment on Google Cloud Platform.
+- [x] CI/CD pipeline with github actions.
 - [ ] Make docstring and typing.
+- [ ] Buil our deployment's infrastructure as code (IaC) with terraform to build environment on Google Cloud Platform.
+
 
 
 
