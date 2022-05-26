@@ -38,7 +38,6 @@ This project will consist to:
 - [x] Unitary tests with Pytest (Fixtures and Mocks).
 - [x] CI/CD pipeline with github actions.
 - [ ] Make docstring and typing.
-- [ ] Build our deployment's infrastructure as code (IaC) with terraform to build environment on Google Cloud Platform.
 
 
 
