@@ -145,3 +145,8 @@ If you want to delete the conda environment use the following command:
 ```bash
 $ make clean
 ```
+
+## Useful ressources for this project
+https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-google-kubernetes-engine
+
+https://madewithml.com/#mlops
