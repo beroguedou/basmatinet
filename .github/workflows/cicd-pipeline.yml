@@ -54,7 +54,7 @@ jobs:
       shell: bash -l {0}
 
     - name: Re-tag Docker image
-      run: docker tag basmatinet gcr.io/$PROJECT_ID/basmatinet:$TAG
+      run: docker tag $IMAGE gcr.io/$PROJECT_ID/$IMAGE:$TAG
 
     - name: Setup Google Cloud CLI
       uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
@@ -80,7 +80,9 @@ jobs:
         kubectl apply -f basmatinet/app/k8s/namespace.yaml
 
     - name: Create a deployment for the application to GKE cluster
-      run: kubectl apply -f basmatinet/app/k8s/basmatinet-deployment.yaml --namespace=mlops-production
+      run: |-
+        kubectl create deployment --image=gcr.io/$PROJECT_ID/$IMAGE:$TAG --namespace=mlops-production --replicas=2
+    #run: kubectl apply -f basmatinet/app/k8s/basmatinet-deployment.yaml --namespace=mlops-production
 
     - name: Create a service for the application
       run: kubectl apply -f basmatinet/app/k8s/basmatinet-service.yaml --namespace=mlops-production
