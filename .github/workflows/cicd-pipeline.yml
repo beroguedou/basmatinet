@@ -15,7 +15,7 @@ env:
   GKE_ZONE: us-central1-c
   DEPLOYMENT_NAME: basmatinet-app
   IMAGE: basmatinet
-  TAG: v1.0.0
+  TAG: v1.1.0
 
 jobs:
   setup-build-publish-deploy:
@@ -77,13 +77,13 @@ jobs:
 
     - name: Create namespace if it is not existant
       run: |-
-        kubectl apply -f app/k8s/namespace.yaml
+        kubectl apply -f basmatinet/app/k8s/namespace.yaml
 
     - name: Create a deployment for the application to GKE cluster
-      run: kubectl apply -f app/k8s/basmatinet-deployment.yaml --namespace=mlops-production
+      run: kubectl apply -f basmatinet/app/k8s/basmatinet-deployment.yaml --namespace=mlops-production
 
     - name: Create a service for the application
-      run: kubectl apply -f app/k8s/basmatinet-service.yaml --namespace=mlops-production
+      run: kubectl apply -f basmatinet/app/k8s/basmatinet-service.yaml --namespace=mlops-production
 
     - name: Check if the service is good
       run: kubectl get services -n mlops-production
