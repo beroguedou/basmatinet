@@ -15,8 +15,8 @@ spec:
         app: basmatinet-app
     spec:
       containers:
-        - image: gcr.io/$PROJECT_ID/$IMAGE:TAG
-          name: $IMAGE
+        - image: gcr.io/PROJECT_ID/IMAGE:TAG
+          name: basmatinet-app
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
