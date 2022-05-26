@@ -81,7 +81,7 @@ jobs:
 
     - name: Create a deployment for the application to GKE cluster
       run: |-
-        kubectl create deployment --image=gcr.io/$PROJECT_ID/$IMAGE:$TAG --namespace=mlops-production --replicas=2
+        kubectl create deployment $DEPLOYMENT_NAME --image=gcr.io/$PROJECT_ID/$IMAGE:$TAG --namespace=mlops-production --replicas=2
     #run: kubectl apply -f basmatinet/app/k8s/basmatinet-deployment.yaml --namespace=mlops-production
 
     - name: Create a service for the application
