@@ -10,6 +10,12 @@ BATCH_SIZE := 16
 PORT := 5001
 
 
+# Create the conda env
+buildenv:
+	conda env create -f conda-env.yml 
+# Delete the conda env
+delenv:
+	conda env remove --name basmatienv
 # Train a model
 .PHONY: train
 train:
