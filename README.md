@@ -38,8 +38,6 @@ This project will consist to:
 - [x] Unitary tests with Pytest (Fixtures and Mocks).
 - [x] CI/CD pipeline with github actions.
 - [ ] Make docstring and typing.
-- [ ] Build our deployment's infrastructure as code (IaC) with terraform to build environment on Google Cloud Platform.
-
 
 
 
@@ -146,7 +144,69 @@ If you want to delete the conda environment use the following command:
 $ make clean
 ```
 
-## Useful ressources for this project
-https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-google-kubernetes-engine
+## 8 - Prerequisites for the CI/CD with github actions.
+These steps are very important and you won't be able to push or pull request on main branch if there are not realised. You need to perform them in a Google Cloud Console.
 
-https://madewithml.com/#mlops
+### A - Create a GKE cluster
+As you want to deploy your deploy your project to a Google Kubernetes Engine, you need to have one. we choose a simple zonal cluster here. You will also need to create 03 variables here:
+
+- $GKE_PROJECT: your GCP project id
+- $GKE_CLUSTER: the name you want for your GKE cluster
+- $GKE_ZONE: the zone were you want your cluster
+
+```bash
+$ gcloud container clusters create $GKE_CLUSTER \
+	--project=$GKE_PROJECT \
+	--zone=$GKE_ZONE
+```
+
+### B - Enabling useful APIs
+Enable container registry to be able to push your docker image in GCR. And enable k8s to deploy container based application.
+
+```bash
+$ gcloud services enable \
+	containerregistry.googleapis.com \
+	container.googleapis.com
+```
+
+### C - Configure a service account 
+Create a variable named $SA_NAME for your service account. And copy its email to create a new variable $SA_EMAIL.
+
+```bash
+# Create service account
+$ gcloud iam service-accounts create $SA_NAME
+# verify if the service account is created and copy its email
+$ gcloud iam service-accounts list
+```
+
+### D - Give the service accounts necessary permissions
+As you want to connect programmatically with your service account, it needs some permissions defined by some roles. You can give more restrictive roles to respect least privileges principle.
+
+```bash
+$ gcloud projects add-iam-policy-binding $GKE_PROJECT \
+	--member=serviceAccount:$SA_EMAIL \
+	--role=roles/container.admin
+$ gcloud projects add-iam-policy-binding $GKE_PROJECT \
+	--member=serviceAccount:$SA_EMAIL \
+	--role=roles/storage.admin
+$ gcloud projects add-iam-policy-binding $GKE_PROJECT \
+	--member=serviceAccount:$SA_EMAIL \
+	--role=roles/container.clusterViewer
+```
+
+### E - Download the service account key and encode it like a secret
+
+```bash
+# Create a service account
+$ gcloud iam service-accounts keys create key.json --iam-account=$SA_EMAIL
+# Encode the service account key
+$ export GKE_SA_KEY=$(cat key.json | base64)
+# Show the value of the encoded key 
+$ echo $GKE_SA_KEY
+```
+
+### F - Store the service account encoded key 
+Copy the encoded key and store as a secret named GKE_SA_KEY it your github settings secrets interface. 
+
+### G - Store your GCP project name
+Store the name of your project as a secret named GKE_PROJECT in your github settings secrets interface.
