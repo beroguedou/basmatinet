@@ -8,11 +8,11 @@ PROJECT_ID := ""
 HOSTNAME := ""
 BATCH_SIZE := 16
 PORT := 5001
-
+EARLY_STOPPING := 20
 
 # Create the conda env
 buildenv:
-	conda env create -f conda-env.yml 
+	conda env create -f conda-env.yml
 # Delete the conda env
 delenv:
 	conda env remove --name basmatienv
@@ -21,7 +21,7 @@ delenv:
 train:
 	python basmatinet/ml/train.py ${PATH_TO_DATASET} \
                      --batch-size ${BATCH_SIZE} --nb-epochs 200 \
-                     --workers 8 --early-stopping 5  \
+                     --workers 8 --early-stopping ${EARLY_STOPPING}  \
                      --percentage 0.1 --cuda
 # See MLFlow tracking interface
 tracking:

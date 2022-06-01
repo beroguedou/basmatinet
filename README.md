@@ -147,7 +147,7 @@ $ make clean
 ## 8 - Prerequisites for the CI/CD with github actions.
 These steps are very important and you won't be able to push or pull request on main branch if there are not realised. You need to perform them in a Google Cloud Console.
 
-### A - Create a GKE cluster
+#### A - Create a GKE cluster
 As you want to deploy your deploy your project to a Google Kubernetes Engine, you need to have one. we choose a simple zonal cluster here. You will also need to create 03 variables here:
 
 - $GKE_PROJECT: your GCP project id
@@ -160,7 +160,7 @@ $ gcloud container clusters create $GKE_CLUSTER \
 	--zone=$GKE_ZONE
 ```
 
-### B - Enabling useful APIs
+#### B - Enabling useful APIs
 Enable container registry to be able to push your docker image in GCR. And enable k8s to deploy container based application.
 
 ```bash
@@ -169,7 +169,7 @@ $ gcloud services enable \
 	container.googleapis.com
 ```
 
-### C - Configure a service account 
+#### C - Configure a service account
 Create a variable named $SA_NAME for your service account. And copy its email to create a new variable $SA_EMAIL.
 
 ```bash
@@ -179,7 +179,7 @@ $ gcloud iam service-accounts create $SA_NAME
 $ gcloud iam service-accounts list
 ```
 
-### D - Give the service accounts necessary permissions
+#### D - Give the service accounts necessary permissions
 As you want to connect programmatically with your service account, it needs some permissions defined by some roles. You can give more restrictive roles to respect least privileges principle.
 
 ```bash
@@ -194,19 +194,19 @@ $ gcloud projects add-iam-policy-binding $GKE_PROJECT \
 	--role=roles/container.clusterViewer
 ```
 
-### E - Download the service account key and encode it like a secret
+#### E - Download the service account key and encode it like a secret
 
 ```bash
 # Create a service account
 $ gcloud iam service-accounts keys create key.json --iam-account=$SA_EMAIL
 # Encode the service account key
 $ export GKE_SA_KEY=$(cat key.json | base64)
-# Show the value of the encoded key 
+# Show the value of the encoded key
 $ echo $GKE_SA_KEY
 ```
 
-### F - Store the service account encoded key 
-Copy the encoded key and store as a secret named GKE_SA_KEY it your github settings secrets interface. 
+#### F - Store the service account encoded key
+Copy the encoded key and store as a secret named GKE_SA_KEY it your github settings secrets interface.
 
-### G - Store your GCP project name
+#### G - Store your GCP project name
 Store the name of your project as a secret named GKE_PROJECT in your github settings secrets interface.
